@@ -15,12 +15,10 @@
   --bg:#07040f;--s1:#0f0919;--s2:#160e26;--card:#120b20;
   --border:rgba(255,255,255,0.07);--text:#eee8ff;
   --muted:rgba(238,232,255,0.42);--dim:rgba(238,232,255,0.18);
-  --accent:#e8445a;--gold:#f0c040;--r:14px;
+  --accent:#e8445a;--r:14px;
 }
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
-html{scroll-behavior:smooth;}
 body{font-family:'Noto Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;}
-
 .orbs{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
 .o{position:absolute;border-radius:50%;filter:blur(100px);opacity:.09;}
 .o1{width:550px;height:550px;background:#e8445a;top:-150px;left:-180px;animation:da 22s ease-in-out infinite;}
@@ -29,88 +27,97 @@ body{font-family:'Noto Sans',sans-serif;background:var(--bg);color:var(--text);m
 @keyframes da{0%,100%{transform:translate(0,0)}50%{transform:translate(55px,38px)}}
 @keyframes db{0%,100%{transform:translate(0,0)}50%{transform:translate(-48px,-30px)}}
 @keyframes dc{0%,100%{transform:translate(0,0)}50%{transform:translate(-30px,44px)}}
+.app{position:relative;z-index:1;min-height:100vh;padding-bottom:200px;}
 
-.app{position:relative;z-index:1;display:flex;flex-direction:column;min-height:100vh;padding-bottom:180px;}
-
-header{position:sticky;top:0;z-index:200;background:rgba(7,4,15,0.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:16px 16px 0;}
-.hrow{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+header{position:sticky;top:0;z-index:200;background:rgba(7,4,15,0.93);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:16px 16px 0;}
 .brand{font-family:'Baloo 2',cursive;font-size:24px;font-weight:800;background:linear-gradient(110deg,#f0c040,#e8445a,#a855f7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-.bsub{font-size:9.5px;letter-spacing:2.5px;text-transform:uppercase;color:var(--muted);margin-top:1px;}
-
+.bsub{font-size:9.5px;letter-spacing:2.5px;text-transform:uppercase;color:var(--muted);margin-top:1px;margin-bottom:14px;}
 .sbox{display:flex;align-items:center;gap:8px;background:var(--s2);border:1px solid var(--border);border-radius:12px;padding:9px 14px;margin-bottom:13px;}
 .sbox input{flex:1;background:none;border:none;outline:none;color:var(--text);font-size:13px;font-family:'Noto Sans',sans-serif;}
 .sbox input::placeholder{color:var(--dim);}
-#clearBtn{color:var(--dim);cursor:pointer;font-size:13px;display:none;line-height:1;flex-shrink:0;}
-
+#clearBtn{color:var(--dim);cursor:pointer;font-size:13px;display:none;flex-shrink:0;}
 .tabs{display:flex;gap:7px;overflow-x:auto;padding-bottom:13px;scrollbar-width:none;}
 .tabs::-webkit-scrollbar{display:none;}
 .tab{flex-shrink:0;display:inline-flex;align-items:center;gap:5px;padding:7px 13px;border-radius:100px;border:1px solid var(--border);background:var(--s2);cursor:pointer;font-size:12px;font-weight:500;color:var(--muted);transition:all .2s;white-space:nowrap;}
-.tab:hover{color:var(--text);border-color:rgba(255,255,255,0.15);}
+.tab:hover{color:var(--text);}
 .tab.on{color:#fff;border-color:transparent;background:var(--gc,#e8445a);box-shadow:0 0 18px var(--gg,rgba(232,68,90,.4));}
 
-main{padding:18px 16px 8px;}
+main{padding:16px;}
+
+/* setup banner */
+.setup-banner{background:linear-gradient(135deg,rgba(232,68,90,0.12),rgba(168,85,247,0.12));border:1px solid rgba(232,68,90,0.25);border-radius:16px;padding:20px;margin-bottom:20px;}
+.setup-banner h2{font-family:'Baloo 2',cursive;font-size:16px;margin-bottom:8px;color:#fff;}
+.setup-banner p{font-size:12px;color:var(--muted);line-height:1.7;margin-bottom:12px;}
+.setup-steps{display:flex;flex-direction:column;gap:8px;margin-bottom:14px;}
+.step{display:flex;gap:10px;align-items:flex-start;}
+.step-num{width:22px;height:22px;border-radius:50%;background:var(--accent);color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
+.step-text{font-size:12px;color:var(--text);line-height:1.6;}
+.step-text a{color:#a78bfa;text-decoration:none;}
+.step-text code{background:rgba(255,255,255,0.08);padding:2px 6px;border-radius:5px;font-size:11px;font-family:monospace;}
+.api-input-row{display:flex;gap:8px;align-items:center;}
+.api-input-row input{flex:1;background:var(--s2);border:1px solid var(--border);border-radius:10px;padding:9px 12px;color:var(--text);font-size:12px;font-family:monospace;outline:none;}
+.api-input-row input:focus{border-color:rgba(232,68,90,0.4);}
+.btn{padding:9px 16px;border-radius:10px;border:none;background:var(--accent);color:#fff;font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap;font-family:'Noto Sans',sans-serif;}
+.btn:hover{background:#f0566e;}
+.btn.sec{background:var(--s2);border:1px solid var(--border);color:var(--muted);}
+
+/* genre view */
+#genreView{display:none;}
 .slabel{font-size:10px;letter-spacing:2.8px;text-transform:uppercase;color:var(--muted);margin-bottom:12px;}
 
-/* featured strip */
 .strip{display:flex;gap:10px;overflow-x:auto;padding-bottom:6px;margin-bottom:24px;scrollbar-width:none;}
 .strip::-webkit-scrollbar{display:none;}
 
 .scard{flex-shrink:0;width:130px;background:var(--card);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;cursor:pointer;transition:transform .2s,box-shadow .2s;animation:fu .4s ease both;position:relative;}
-.scard:hover{transform:translateY(-5px);box-shadow:0 16px 32px rgba(0,0,0,.5);}
-.scard.on{border-color:var(--accent) !important;box-shadow:0 0 0 2px var(--accent),0 8px 24px rgba(232,68,90,.3) !important;}
-.scard.loading .scard-body{opacity:.5;}
-.card-thumb{width:100%;aspect-ratio:16/9;object-fit:cover;display:block;background:var(--s2);}
-.card-ph{width:100%;aspect-ratio:16/9;background:linear-gradient(135deg,var(--s2),var(--s1));display:flex;align-items:center;justify-content:center;font-size:28px;}
-.scard-body{padding:8px 9px 10px;}
-.scard-title{font-size:11px;font-weight:600;line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
-.scard-ytitle{font-size:9.5px;color:var(--muted);margin-top:2px;display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden;font-style:italic;}
+.scard:hover{transform:translateY(-4px);box-shadow:0 14px 28px rgba(0,0,0,.5);}
+.scard.on{border-color:var(--accent)!important;box-shadow:0 0 0 2px var(--accent)!important;}
+.scard.loading .scard-body{opacity:0.5;}
+.scard-art{width:100%;aspect-ratio:1;overflow:hidden;background:var(--s2);}
+.scard-art img{width:100%;height:100%;object-fit:cover;display:block;}
+.scard-art-ph{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:36px;background:linear-gradient(135deg,var(--s2),var(--s1));}
+.scard-body{padding:8px 10px 10px;}
+.scard-title{font-size:11.5px;font-weight:600;line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.scard-sub{font-size:10px;color:var(--muted);margin-top:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 
-/* loading shimmer */
-.shimmer{background:linear-gradient(90deg,var(--s2) 25%,var(--s1) 50%,var(--s2) 75%);background-size:200% 100%;animation:shimmer 1.5s infinite;}
-@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+/* shimmer */
+.shimmer{background:linear-gradient(90deg,var(--s2) 25%,rgba(255,255,255,0.04) 50%,var(--s2) 75%);background-size:200% 100%;animation:sh 1.4s infinite;}
+@keyframes sh{0%{background-position:200% 0}100%{background-position:-200% 0}}
 
-/* song list */
 .slist{display:flex;flex-direction:column;gap:1px;}
-.srow{display:flex;align-items:center;gap:11px;padding:9px 10px;border-radius:11px;cursor:pointer;transition:background .15s;animation:fu .3s ease both;border:1px solid transparent;}
+.srow{display:flex;align-items:center;gap:12px;padding:10px;border-radius:11px;cursor:pointer;transition:background .15s;border:1px solid transparent;animation:fu .3s ease both;}
 .srow:hover{background:var(--s2);}
 .srow.on{background:rgba(232,68,90,.08);border-color:rgba(232,68,90,.2);}
-.srow.loading{opacity:.6;pointer-events:none;}
 .snum{width:22px;text-align:center;font-size:12px;color:var(--dim);flex-shrink:0;}
 .srow.on .snum{display:none;}
 .sbars{display:none;gap:2px;align-items:flex-end;height:16px;width:22px;flex-shrink:0;}
 .srow.on .sbars{display:flex;}
 .sbars span{display:block;width:3px;background:var(--accent);border-radius:2px;animation:bz .75s ease-in-out infinite;}
-.sbars span:nth-child(1){height:5px;animation-delay:0s}
-.sbars span:nth-child(2){height:13px;animation-delay:.12s}
-.sbars span:nth-child(3){height:7px;animation-delay:.24s}
-.sbars span:nth-child(4){height:15px;animation-delay:.36s}
+.sbars span:nth-child(1){height:5px;animation-delay:0s}.sbars span:nth-child(2){height:13px;animation-delay:.12s}.sbars span:nth-child(3){height:7px;animation-delay:.24s}.sbars span:nth-child(4){height:15px;animation-delay:.36s}
 @keyframes bz{0%,100%{transform:scaleY(.4)}50%{transform:scaleY(1)}}
-.row-thumb{width:42px;height:42px;border-radius:9px;object-fit:cover;flex-shrink:0;background:var(--s2);}
-.row-ph{width:42px;height:42px;border-radius:9px;flex-shrink:0;background:var(--s2);display:flex;align-items:center;justify-content:center;font-size:18px;}
+.row-art{width:44px;height:44px;border-radius:9px;flex-shrink:0;overflow:hidden;background:var(--s2);}
+.row-art img{width:100%;height:100%;object-fit:cover;display:block;}
+.row-art-ph{width:44px;height:44px;border-radius:9px;flex-shrink:0;background:var(--s2);display:flex;align-items:center;justify-content:center;font-size:20px;}
 .srow-meta{flex:1;min-width:0;}
 .srow-title{font-size:13px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.srow-ytitle{font-size:10px;color:rgba(238,232,255,0.3);margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-style:italic;}
-.srow-detail{font-size:11px;color:var(--muted);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-
+.srow-sub{font-size:11px;color:var(--muted);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 @keyframes fu{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+.loading-row{display:flex;align-items:center;gap:12px;padding:10px;border-radius:11px;}
+.lr-art{width:44px;height:44px;border-radius:9px;flex-shrink:0;}
+.lr-lines{flex:1;display:flex;flex-direction:column;gap:6px;}
+.lr-line{height:10px;border-radius:5px;}
 
 .empty{text-align:center;padding:60px 20px;color:var(--muted);}
 .empty .ei{font-size:44px;margin-bottom:14px;}
-.empty p{font-size:13px;line-height:1.7;}
-
-/* status bar */
-.status{display:flex;align-items:center;gap:8px;padding:10px 14px;background:rgba(240,192,64,0.07);border:1px solid rgba(240,192,64,0.15);border-radius:10px;margin-bottom:16px;font-size:11px;color:rgba(240,192,64,0.7);}
-.status.ok{background:rgba(22,163,74,0.07);border-color:rgba(22,163,74,0.15);color:rgba(134,239,172,0.7);}
-.status.err{background:rgba(232,68,90,0.07);border-color:rgba(232,68,90,0.15);color:rgba(255,150,160,0.8);}
-#statusBar{display:none;}
 
 /* PLAYER */
 #player{position:fixed;bottom:0;left:0;right:0;z-index:300;background:rgba(7,4,15,0.97);backdrop-filter:blur(28px);border-top:1px solid var(--border);transform:translateY(100%);transition:transform .35s cubic-bezier(.34,1.2,.64,1);}
 #player.open{transform:translateY(0);}
 .ph{width:34px;height:4px;border-radius:2px;background:rgba(255,255,255,0.12);margin:10px auto 0;cursor:pointer;}
-.pmini{display:flex;align-items:center;gap:11px;padding:10px 16px 12px;cursor:pointer;}
-.pthumb{width:44px;height:44px;border-radius:10px;flex-shrink:0;background:var(--s2);display:flex;align-items:center;justify-content:center;font-size:22px;overflow:hidden;}
-.pthumb img{width:100%;height:100%;object-fit:cover;display:block;}
+.pmini{display:flex;align-items:center;gap:12px;padding:10px 16px 12px;cursor:pointer;}
+.part{width:44px;height:44px;border-radius:10px;flex-shrink:0;overflow:hidden;background:var(--s2);}
+.part img{width:100%;height:100%;object-fit:cover;display:block;}
+.part-ph{width:44px;height:44px;border-radius:10px;flex-shrink:0;background:var(--s2);display:flex;align-items:center;justify-content:center;font-size:22px;}
 .pmeta{flex:1;min-width:0;}
 .ptitle{font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .psub{font-size:11px;color:var(--muted);margin-top:1px;}
@@ -118,41 +125,74 @@ main{padding:18px 16px 8px;}
 .pb{width:36px;height:36px;border-radius:50%;border:none;background:none;color:var(--text);cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;transition:background .2s;}
 .pb:hover{background:var(--s2);}
 .pb.pp{width:40px;height:40px;background:var(--accent);color:#fff;font-size:13px;}
-.pb.pp:hover{background:#f0566e;}
 .pexp{display:none;padding:0 16px;padding-bottom:calc(16px + env(safe-area-inset-bottom));}
 .pexp.on{display:block;}
-.ytbox{border-radius:13px;overflow:hidden;background:#000;aspect-ratio:16/9;margin-bottom:14px;}
-.ytbox iframe{width:100%;height:100%;border:none;display:block;}
-.petitle{font-size:14px;font-weight:700;margin-bottom:2px;line-height:1.3;}
-.pesub{font-size:11px;color:var(--muted);margin-bottom:14px;}
-.pebtns{display:flex;gap:8px;}
+
+/* audio player */
+.audio-wrap{background:var(--s2);border-radius:13px;padding:16px;margin-bottom:14px;}
+.audio-art{width:80px;height:80px;border-radius:10px;overflow:hidden;margin:0 auto 12px;background:var(--card);}
+.audio-art img{width:100%;height:100%;object-fit:cover;display:block;}
+.audio-title{font-size:14px;font-weight:700;text-align:center;margin-bottom:4px;}
+.audio-sub{font-size:11px;color:var(--muted);text-align:center;margin-bottom:14px;}
+audio{width:100%;border-radius:8px;outline:none;}
+audio::-webkit-media-controls-panel{background:var(--s1);}
+
+.pebtns{display:flex;gap:8px;margin-top:12px;}
 .pbtn2{flex:1;padding:11px 8px;border-radius:11px;border:1px solid var(--border);background:var(--s2);color:var(--text);font-size:12px;font-family:'Noto Sans',sans-serif;cursor:pointer;transition:all .2s;text-align:center;}
 .pbtn2:hover{background:rgba(255,255,255,.07);}
 .pbtn2.pri{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:600;}
+
+.toast{position:fixed;bottom:220px;left:50%;transform:translateX(-50%) translateY(10px);background:rgba(30,20,50,0.95);border:1px solid var(--border);border-radius:10px;padding:10px 18px;font-size:12px;color:var(--text);opacity:0;transition:all .3s;pointer-events:none;z-index:999;white-space:nowrap;}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
 </style>
 </head>
 <body>
 <div class="orbs"><div class="o o1"></div><div class="o o2"></div><div class="o o3"></div></div>
 <div class="app">
-
 <header>
-  <div class="hrow">
-    <div>
-      <div class="brand">🎵 SurMandal</div>
-      <div class="bsub">Bollywood · Marathi · Free · No Login</div>
-    </div>
-  </div>
+  <div class="brand">🎵 SurMandal</div>
+  <div class="bsub">Bollywood · Marathi · Free · No Login</div>
   <div class="sbox">
-    <span style="color:var(--dim);font-size:14px;flex-shrink:0;">🔍</span>
+    <span style="color:var(--dim);font-size:14px;flex-shrink:0">🔍</span>
     <input id="searchInput" type="text" placeholder="Search songs, artists, movies…" autocomplete="off"/>
     <span id="clearBtn">✕</span>
   </div>
   <div class="tabs" id="tabs"></div>
 </header>
+<main>
+  <!-- Step 1: Setup banner shown until API is configured -->
+  <div class="setup-banner" id="setupBanner">
+    <h2>⚙️ One-time setup needed</h2>
+    <p>SurMandal uses a free JioSaavn API to stream real songs. You need to deploy it once to your Vercel — takes 2 minutes, completely free.</p>
+    <div class="setup-steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-text">Click this link to deploy the free JioSaavn API to your Vercel:<br/>
+          <a href="https://vercel.com/import/project?template=https://github.com/sumitkolhe/jiosaavn-api" target="_blank">
+            → Deploy JioSaavn API to Vercel (free, 1 click)
+          </a>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-text">After deploy, Vercel gives you a URL like <code>jiosaavn-api-xyz.vercel.app</code>. Copy it.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-text">Paste your API URL below and click Save:</div>
+      </div>
+    </div>
+    <div class="api-input-row">
+      <input type="text" id="apiUrlInput" placeholder="https://jiosaavn-api-xyz.vercel.app" autocomplete="off"/>
+      <button class="btn" onclick="saveApiUrl()">Save & Start</button>
+    </div>
+    <p style="margin-top:12px;font-size:11px;color:var(--dim);">Already set up? <span style="color:#a78bfa;cursor:pointer;" onclick="loadSavedUrl()">Load saved URL</span></p>
+  </div>
 
-<main id="main">
-  <div class="status" id="statusBar"><span id="statusIcon">⏳</span><span id="statusMsg"></span></div>
-  <div id="content"></div>
+  <!-- Genre view shown after setup -->
+  <div id="genreView">
+    <div id="content"></div>
+  </div>
 </main>
 </div>
 
@@ -160,457 +200,279 @@ main{padding:18px 16px 8px;}
 <div id="player">
   <div class="ph" id="ph"></div>
   <div class="pmini" id="pmini">
-    <div class="pthumb" id="pthumb">🎵</div>
+    <div class="part-ph" id="partWrap">🎵</div>
     <div class="pmeta">
       <div class="ptitle" id="ptitle">Choose a song</div>
       <div class="psub" id="psub">SurMandal</div>
     </div>
     <div class="pctrl">
       <button class="pb" id="prevB">⏮</button>
-      <button class="pb pp" id="ppB">▶</button>
+      <button class="pb pp" id="ppB">⏸</button>
       <button class="pb" id="nextB">⏭</button>
       <button class="pb" id="expB">🔼</button>
     </div>
   </div>
   <div class="pexp" id="pexp">
-    <div class="ytbox" id="ytbox">
-      <iframe id="ytf" allow="autoplay;encrypted-media" allowfullscreen></iframe>
+    <div class="audio-wrap">
+      <div class="audio-art"><img id="audioArt" src="" alt="" onerror="this.style.display='none'"/></div>
+      <div class="audio-title" id="audioTitle">—</div>
+      <div class="audio-sub" id="audioSub">—</div>
+      <audio id="audioEl" controls preload="none"></audio>
     </div>
-    <div class="petitle" id="petitle"></div>
-    <div class="pesub" id="pesub"></div>
     <div class="pebtns">
       <button class="pbtn2" id="favB">🤍 Favourite</button>
       <button class="pbtn2" id="shareB">🔗 Share</button>
-      <button class="pbtn2 pri" id="ytB">YouTube ↗</button>
+      <button class="pbtn2 pri" id="saavnBtn">Open JioSaavn ↗</button>
     </div>
   </div>
 </div>
 
+<div class="toast" id="toast"></div>
+
 <script>
-// ─────────────────────────────────────────────────────────────
-// GENRES
-// ─────────────────────────────────────────────────────────────
+// ─── CONFIG ───────────────────────────────────────────────────
+const STORAGE_KEY = 'sm_api_url';
+const FAV_KEY = 'sm_favs';
+
 const GENRES = [
-  {id:'romantic',   label:'Romantic',         emoji:'💕', color:'#e8445a', glow:'rgba(232,68,90,.4)'},
-  {id:'retro',      label:'Retro Classics',    emoji:'📻', color:'#d4900a', glow:'rgba(212,144,10,.4)'},
-  {id:'party',      label:'Party & Dance',     emoji:'🎉', color:'#9333ea', glow:'rgba(147,51,234,.4)'},
-  {id:'devotional', label:'Devotional',        emoji:'🪔', color:'#ea580c', glow:'rgba(234,88,12,.4)'},
-  {id:'marathi',    label:'Marathi',           emoji:'🥁', color:'#16a34a', glow:'rgba(22,163,74,.4)'},
-  {id:'chill',      label:'Chill & Lo-fi',     emoji:'🌙', color:'#0ea5e9', glow:'rgba(14,165,233,.4)'},
-  {id:'latest',     label:'Latest 2025',       emoji:'🔥', color:'#e8445a', glow:'rgba(232,68,90,.4)'},
+  {id:'romantic',   label:'Romantic',        emoji:'💕', color:'#e8445a', glow:'rgba(232,68,90,.4)',   query:'romantic hindi bollywood songs'},
+  {id:'retro',      label:'Retro Classics',   emoji:'📻', color:'#d4900a', glow:'rgba(212,144,10,.4)',  query:'kishore kumar lata mangeshkar old hindi songs'},
+  {id:'party',      label:'Party & Dance',    emoji:'🎉', color:'#9333ea', glow:'rgba(147,51,234,.4)',  query:'bollywood party dance songs 2023'},
+  {id:'devotional', label:'Devotional',       emoji:'🪔', color:'#ea580c', glow:'rgba(234,88,12,.4)',   query:'hindi bhajan aarti devotional songs'},
+  {id:'marathi',    label:'Marathi',          emoji:'🥁', color:'#16a34a', glow:'rgba(22,163,74,.4)',   query:'marathi songs sairat lokgeet'},
+  {id:'chill',      label:'Chill & Lo-fi',    emoji:'🌙', color:'#0ea5e9', glow:'rgba(14,165,233,.4)',  query:'chill bollywood arijit singh romantic songs'},
+  {id:'latest',     label:'Latest 2025',      emoji:'🔥', color:'#e8445a', glow:'rgba(232,68,90,.4)',   query:'latest bollywood hits 2024 2025'},
 ];
 
-// ─────────────────────────────────────────────────────────────
-// SONG CATALOG — search queries crafted to find exact songs
-// The /api/search serverless function runs these on the server
-// ─────────────────────────────────────────────────────────────
-const CATALOG = {
-  romantic: [
-    {title:'Tum Hi Ho',            artist:'Arijit Singh',          movie:'Aashiqui 2',              q:'Tum Hi Ho Arijit Singh Aashiqui 2 official video'},
-    {title:'Channa Mereya',        artist:'Arijit Singh',          movie:'Ae Dil Hai Mushkil',      q:'Channa Mereya full video Ae Dil Hai Mushkil'},
-    {title:'Kal Ho Naa Ho',        artist:'Sonu Nigam',            movie:'Kal Ho Naa Ho',           q:'Kal Ho Naa Ho title song Sonu Nigam official'},
-    {title:'Dil Diyan Gallan',     artist:'Atif Aslam',            movie:'Tiger Zinda Hai',         q:'Dil Diyan Gallan full video Tiger Zinda Hai'},
-    {title:'Jeena Jeena',          artist:'Atif Aslam',            movie:'Badlapur',                q:'Jeena Jeena Atif Aslam Badlapur official'},
-    {title:'Khairiyat',            artist:'Arijit Singh',          movie:'Chhichhore',              q:'Khairiyat Arijit Singh Chhichhore official'},
-    {title:'Tera Ban Jaunga',      artist:'Akhil · Tulsi Kumar',   movie:'Kabir Singh',             q:'Tera Ban Jaunga Kabir Singh official video'},
-    {title:'Raataan Lambiyan',     artist:'Jubin Nautiyal',        movie:'Shershaah',               q:'Raataan Lambiyan Shershaah official video'},
-    {title:'Ae Dil Hai Mushkil',   artist:'Arijit Singh',          movie:'ADHM',                    q:'Ae Dil Hai Mushkil title song full video official'},
-    {title:'Kesariya',             artist:'Arijit Singh',          movie:'Brahmastra',              q:'Kesariya Brahmastra full video official'},
-    {title:'Ik Vaari Aa',          artist:'Arijit Singh',          movie:'Raabta',                  q:'Ik Vaari Aa Arijit Singh Raabta official'},
-    {title:'Tere Vaaste',          artist:'Varun Jain',            movie:'Zara Hatke',              q:'Tere Vaaste Zara Hatke Zara Bachke official video'},
-  ],
-  retro: [
-    {title:'Mere Sapno Ki Rani',   artist:'Kishore Kumar',         movie:'Aradhana',                q:'Mere Sapno Ki Rani Kishore Kumar Aradhana official'},
-    {title:'Yeh Shaam Mastani',    artist:'Kishore Kumar',         movie:'Kati Patang',             q:'Yeh Shaam Mastani Kishore Kumar Kati Patang'},
-    {title:'Gulabi Aankhen',       artist:'Mohammed Rafi',         movie:'The Train',               q:'Gulabi Aankhen Mohammed Rafi The Train official'},
-    {title:'Roop Tera Mastana',    artist:'Kishore Kumar',         movie:'Aradhana',                q:'Roop Tera Mastana Kishore Kumar Aradhana'},
-    {title:'Dum Maro Dum',         artist:'Asha Bhosle',           movie:'Hare Rama Hare Krishna',  q:'Dum Maro Dum Asha Bhosle official'},
-    {title:'Kabhi Kabhi Mere Dil', artist:'Mukesh',                movie:'Kabhi Kabhie',            q:'Kabhi Kabhi Mere Dil Mein Mukesh Kabhi Kabhie official'},
-    {title:'Pyaar Kiya To Darna Kya',artist:'Lata Mangeshkar',    movie:'Mughal-E-Azam',           q:'Pyaar Kiya To Darna Kya Lata Mangeshkar Mughal-E-Azam'},
-    {title:'Zindagi Ek Safar',     artist:'Kishore Kumar',         movie:'Andaz',                   q:'Zindagi Ek Safar Hai Suhana Kishore Kumar Andaz'},
-    {title:'Lag Ja Gale',          artist:'Lata Mangeshkar',       movie:'Woh Kaun Thi',            q:'Lag Ja Gale Lata Mangeshkar Woh Kaun Thi official'},
-    {title:'Tere Mere Sapne',      artist:'Mohammed Rafi',         movie:'Guide',                   q:'Tere Mere Sapne Mohammed Rafi Guide official'},
-    {title:'O Mere Dil Ke Chain',  artist:'Kishore Kumar',         movie:'Mere Jeevan Saathi',      q:'O Mere Dil Ke Chain Kishore Kumar official'},
-    {title:'Kuch Toh Hua Hai',     artist:'KK',                    movie:'Kal Ho Naa Ho',           q:'Kuch Toh Hua Hai KK Kal Ho Naa Ho official'},
-  ],
-  party: [
-    {title:'Zingaat',              artist:'Ajay-Atul',             movie:'Dhadak',                  q:'Zingaat Hindi Dhadak official video'},
-    {title:'Gallan Goodiyaan',     artist:'Various',               movie:'Dil Dhadakne Do',         q:'Gallan Goodiyaan full video Dil Dhadakne Do'},
-    {title:'Badtameez Dil',        artist:'Benny Dayal',           movie:'Yeh Jawaani Hai Deewani', q:'Badtameez Dil full video Yeh Jawaani Hai Deewani'},
-    {title:'Balam Pichkari',       artist:'Shalmali Kholgade',     movie:'Yeh Jawaani Hai Deewani', q:'Balam Pichkari full video Yeh Jawaani Hai Deewani'},
-    {title:'Kala Chashma',         artist:'Badshah',               movie:'Baar Baar Dekho',         q:'Kala Chashma full video Baar Baar Dekho official'},
-    {title:'Swag Se Swagat',       artist:'Vishal Dadlani',        movie:'Tiger Zinda Hai',         q:'Swag Se Swagat full video Tiger Zinda Hai'},
-    {title:'Tamma Tamma Again',    artist:'Badshah',               movie:'Judwaa 2',                q:'Tamma Tamma Again full video Judwaa 2'},
-    {title:'Bijlee Bijlee',        artist:'Harrdy Sandhu',         movie:'',                        q:'Bijlee Bijlee Harrdy Sandhu official music video'},
-    {title:'Apsara Aali',          artist:'Ajay-Atul',             movie:'Natarang',                q:'Apsara Aali full song Natarang official'},
-    {title:'Senorita',             artist:'Shaan',                 movie:'Zindagi Na Milegi Dobara',q:'Senorita full video Zindagi Na Milegi Dobara'},
-    {title:'Lungi Dance',          artist:'Yo Yo Honey Singh',     movie:'Chennai Express',         q:'Lungi Dance Chennai Express official video'},
-    {title:'Morni Banke',          artist:'Neha Kakkar',           movie:'Badhaai Do',              q:'Morni Banke full video Badhaai Do official'},
-  ],
-  devotional: [
-    {title:'Hanuman Chalisa',      artist:'Hariharan',             movie:'',                        q:'Hanuman Chalisa Hariharan full song'},
-    {title:'Jai Ganesh Deva',      artist:'Traditional',           movie:'Aarti',                   q:'Jai Ganesh Deva Aarti full song'},
-    {title:'Om Jai Jagdish Hare',  artist:'Traditional',           movie:'Aarti',                   q:'Om Jai Jagdish Hare full Aarti'},
-    {title:'Sukhkarta Dukhharta',  artist:'Traditional',           movie:'Ganesh Aarti',            q:'Sukhkarta Dukhharta Ganpati Aarti Marathi'},
-    {title:'Ganpati Bappa Morya',  artist:'Shankar Mahadevan',     movie:'',                        q:'Ganpati Bappa Morya Shankar Mahadevan song'},
-    {title:'Vitthal Vitthal',      artist:'Varkari Bhajan',        movie:'',                        q:'Vitthal Vitthal Jai Hari Vitthal Varkari Bhajan'},
-    {title:'Kun Faya Kun',         artist:'AR Rahman',             movie:'Rockstar',                q:'Kun Faya Kun full video Rockstar AR Rahman'},
-    {title:'Ram Siya Ram',         artist:'Sachet-Parampara',      movie:'Adipurush',               q:'Ram Siya Ram full video Adipurush official'},
-    {title:'Aigiri Nandini',       artist:'Various',               movie:'',                        q:'Aigiri Nandini devotional song full'},
-    {title:'Maha Mrityunjaya Mantra',artist:'Pandit Jasraj',       movie:'',                        q:'Maha Mrityunjaya Mantra Pandit Jasraj'},
-    {title:'Jai Jai Maharashtra',  artist:'Shankar Mahadevan',     movie:'',                        q:'Jai Jai Maharashtra Majha Shankar Mahadevan'},
-    {title:'Shree Ram Chandra',    artist:'Anup Jalota',           movie:'',                        q:'Shree Ram Chandra Kripalu Bhaj Man Anup Jalota'},
-  ],
-  marathi: [
-    {title:'Zingaat',              artist:'Ajay-Atul',             movie:'Sairat',                  q:'Zingaat Sairat Marathi full song original'},
-    {title:'Yad Lagla',            artist:'Swapnil Bandodkar',     movie:'Sairat',                  q:'Yad Lagla Sairat Marathi full song official'},
-    {title:'Natrang Vaju Lagla',   artist:'Ajay-Atul',             movie:'Natarang',                q:'Natrang Vaju Lagla Natarang Marathi full song'},
-    {title:'Apsara Aali',          artist:'Ajay-Atul',             movie:'Natarang',                q:'Apsara Aali Natarang Marathi full song'},
-    {title:'Mala Jau De',          artist:'Ajay-Atul',             movie:'',                        q:'Mala Jau De Ajay Atul Marathi song official'},
-    {title:'Ekach Raja',           artist:'Avadhoot Gupte',        movie:'',                        q:'Ekach Raja Avadhoot Gupte Marathi song'},
-    {title:'Kombdi Palali',        artist:'Traditional',           movie:'Lokgeet',                 q:'Kombdi Palali Marathi Lokgeet original'},
-    {title:'Morya Re',             artist:'Shankar Mahadevan',     movie:'',                        q:'Morya Re Shankar Mahadevan Marathi Ganpati'},
-    {title:'Tula Pahile Mi',       artist:'Hriday Gattani',        movie:'',                        q:'Tula Pahile Mi Hriday Gattani Marathi'},
-    {title:'Swar Ye Mala',         artist:'Shreya Ghoshal',        movie:'',                        q:'Swar Ye Mala Shreya Ghoshal Marathi song'},
-    {title:'Majhya Priya Shivaji',  artist:'Various',              movie:'',                        q:'Majhya Priya Shivaji Raje Marathi song'},
-    {title:'Phulpakharu',          artist:'Vaibhav Joshi',         movie:'',                        q:'Phulpakharu Vaibhav Joshi Marathi song'},
-  ],
-  chill: [
-    {title:'Kun Faya Kun',         artist:'AR Rahman',             movie:'Rockstar',                q:'Kun Faya Kun full video Rockstar official'},
-    {title:'Phir Le Aya Dil',      artist:'Arijit Singh',          movie:'Barfi',                   q:'Phir Le Aya Dil Arijit Singh Barfi official'},
-    {title:'Tum Se Hi',            artist:'Mohit Chauhan',         movie:'Jab We Met',              q:'Tum Se Hi Mohit Chauhan Jab We Met official'},
-    {title:'Tujhe Bhula Diya',     artist:'Mohit Chauhan',         movie:'Anjaana Anjaani',         q:'Tujhe Bhula Diya Mohit Chauhan Anjaana Anjaani'},
-    {title:'Safar',                artist:'Jubin Nautiyal',        movie:'Jab Harry Met Sejal',     q:'Safar Jubin Nautiyal Jab Harry Met Sejal official'},
-    {title:'Main Yahaan Hoon',     artist:'Udit Narayan',          movie:'Veer-Zaara',              q:'Main Yahaan Hoon Udit Narayan Veer-Zaara'},
-    {title:'Agar Tum Saath Ho',    artist:'Arijit · Alka Yagnik',  movie:'Tamasha',                 q:'Agar Tum Saath Ho full video Tamasha official'},
-    {title:'Ae Watan',             artist:'Arijit Singh',          movie:'Raazi',                   q:'Ae Watan Arijit Singh Raazi official'},
-    {title:'Phir Mohabbat',        artist:'Arijit Singh',          movie:'Murder 2',                q:'Phir Mohabbat Arijit Singh Murder 2 full song'},
-    {title:'Chaudhary',            artist:'Mame Khan',             movie:'',                        q:'Chaudhary Mame Khan full song official'},
-    {title:'Ik Vaari Aa',          artist:'Arijit Singh',          movie:'Raabta',                  q:'Ik Vaari Aa full video Raabta official'},
-    {title:'Soch Na Sake',         artist:'Arijit Singh',          movie:'Airlift',                 q:'Soch Na Sake Arijit Singh Airlift official'},
-  ],
-  latest: [
-    {title:'Kesariya',             artist:'Arijit Singh',          movie:'Brahmastra',              q:'Kesariya full video Brahmastra official'},
-    {title:'Pehle Bhi Main',       artist:'Vishal Mishra',         movie:'Animal',                  q:'Pehle Bhi Main full video Animal official'},
-    {title:'Raataan Lambiyan',     artist:'Jubin Nautiyal',        movie:'Shershaah',               q:'Raataan Lambiyan full video Shershaah official'},
-    {title:'Ranjha',               artist:'B Praak',               movie:'Shershaah',               q:'Ranjha full video Shershaah B Praak official'},
-    {title:'Tere Vaaste',          artist:'Varun Jain',            movie:'Zara Hatke',              q:'Tere Vaaste full video Zara Hatke official'},
-    {title:'Pasoori',              artist:'Ali Sethi · Shae Gill', movie:'Coke Studio',             q:'Pasoori Ali Sethi Shae Gill Coke Studio official'},
-    {title:'Jhoome Jo Pathaan',    artist:'Arijit Singh',          movie:'Pathaan',                 q:'Jhoome Jo Pathaan full video Pathaan official'},
-    {title:'Arjan Vailly',         artist:'Bhupinder Babbal',      movie:'Animal',                  q:'Arjan Vailly full video Animal official'},
-    {title:'O Maahi',              artist:'Arijit Singh',          movie:'Dunki',                   q:'O Maahi full video Dunki official Arijit Singh'},
-    {title:'Naina',                artist:'Arijit Singh',          movie:'Crew',                    q:'Naina full video Crew official Arijit Singh'},
-    {title:'Sajni',                artist:'Arijit Singh',          movie:'Laapataa Ladies',         q:'Sajni full video Laapataa Ladies official'},
-    {title:'Tu Jhoothi Main Makkaar',artist:'AR Rahman',           movie:'TJMM',                    q:'Tu Jhoothi Main Makkaar title song official'},
-  ],
-};
-
-// ─────────────────────────────────────────────────────────────
-// STATE
-// ─────────────────────────────────────────────────────────────
+let apiBase = '';
 let genre = GENRES[0];
-let songs = [];        // resolved songs for current view
-let idx = -1;
-let expanded = false;
-let favs = JSON.parse(localStorage.getItem('sm_f')||'[]');
-let cache = {};        // q -> {id, thumb, ytTitle}
-let searchMode = false;
+let songs = [];
+let idx = -1, expanded = false;
+let favs = JSON.parse(localStorage.getItem(FAV_KEY)||'[]');
+let genreCache = {};
 
-// Flat list for search
-const allCatalog = Object.entries(CATALOG).flatMap(([gid,list]) =>
-  list.map(s => ({...s, genreId: gid})));
-
-// ─────────────────────────────────────────────────────────────
-// SEARCH via /api/search (serverless) or YouTube API directly
-// ─────────────────────────────────────────────────────────────
-async function ytSearch(q) {
-  if (cache[q]) return cache[q];
-
-  // Try /api/search serverless first (works on Vercel, key is server-side)
-  try {
-    const r = await fetch(`/api/search?q=${encodeURIComponent(q)}`, {signal: AbortSignal.timeout(10000)});
-    const data = await r.json();
-    if (data?.id) {
-      cache[q] = {id: data.id, thumb: data.thumb, ytTitle: data.title};
-      return cache[q];
-    }
-    if (data?.error) console.warn('API route error:', data.error, 'code:', data.code);
-  } catch(e) {
-    console.warn('Serverless route failed (normal in local preview):', e.message);
+// ─── SETUP ────────────────────────────────────────────────────
+function loadSavedUrl() {
+  const saved = localStorage.getItem(STORAGE_KEY);
+  if (saved) {
+    document.getElementById('apiUrlInput').value = saved;
+    startApp(saved);
+  } else {
+    showToast('No saved URL found');
   }
-
-  // Fallback: call YouTube directly from browser
-  // Works when key has NO restrictions or "HTTP referrers" includes this domain
-  try {
-    const key = 'AIzaSyCFHRCWImY1thLi20nBSZpgMGW3UBfRfYg';
-    const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&maxResults=1&videoCategoryId=10&q=${encodeURIComponent(q)}&key=${key}`;
-    const r = await fetch(url, {signal: AbortSignal.timeout(10000)});
-    const data = await r.json();
-    if (data?.error) {
-      console.warn('Direct YT API error:', data.error.message, '| code:', data.error.code);
-      // Show helpful message on 403
-      if (data.error.code === 403) {
-        window._ytApiError = data.error.message;
-      }
-      return null;
-    }
-    if (data?.items?.length) {
-      const item = data.items[0];
-      const result = {
-        id: item.id.videoId,
-        thumb: item.snippet.thumbnails?.medium?.url,
-        ytTitle: item.snippet.title,
-      };
-      cache[q] = result;
-      return result;
-    }
-  } catch(e) {
-    console.warn('Direct YT API fetch failed:', e.message);
-  }
-
-  return null;
 }
 
-// ─────────────────────────────────────────────────────────────
-// TABS
-// ─────────────────────────────────────────────────────────────
+function saveApiUrl() {
+  let url = document.getElementById('apiUrlInput').value.trim();
+  if (!url) { showToast('Please enter your API URL'); return; }
+  if (!url.startsWith('http')) url = 'https://' + url;
+  url = url.replace(/\/$/, '');
+  localStorage.setItem(STORAGE_KEY, url);
+  startApp(url);
+}
+
+function startApp(url) {
+  apiBase = url;
+  document.getElementById('setupBanner').style.display = 'none';
+  document.getElementById('genreView').style.display = 'block';
+  renderTabs();
+  loadGenre(genre);
+}
+
+// Auto-start if URL already saved
+window.addEventListener('DOMContentLoaded', () => {
+  const saved = localStorage.getItem(STORAGE_KEY);
+  if (saved) startApp(saved);
+});
+
+// ─── API CALLS ────────────────────────────────────────────────
+async function searchSongs(query, limit = 12) {
+  const url = `${apiBase}/search/songs?query=${encodeURIComponent(query)}&limit=${limit}`;
+  const r = await fetch(url);
+  if (!r.ok) throw new Error(`API error ${r.status}`);
+  const data = await r.json();
+  // Handle both response shapes
+  const results = data?.data?.results || data?.results || data?.songs || [];
+  return results.map(s => ({
+    id: s.id,
+    title: s.name || s.title || s.song || '?',
+    artist: (s.primaryArtists || s.primary_artists || s.singers || '').split(',')[0].trim(),
+    album: s.album?.name || s.album || '',
+    image: (s.image?.[2]?.url || s.image?.[1]?.url || s.image || '').replace('150x150','500x500'),
+    url: s.downloadUrl?.[4]?.url || s.downloadUrl?.[3]?.url || s.media_url || '',
+    saavnUrl: s.url || s.perma_url || '',
+    duration: s.duration || 0,
+  }));
+}
+
+// ─── TABS ─────────────────────────────────────────────────────
 function renderTabs() {
   document.getElementById('tabs').innerHTML = GENRES.map(g => `
     <div class="tab ${g.id===genre.id?'on':''}" data-id="${g.id}"
       ${g.id===genre.id?`style="--gc:${g.color};--gg:${g.glow};"`:''}>
-      ${g.emoji} ${g.label}
-    </div>`).join('');
-  document.querySelectorAll('.tab').forEach(t =>
-    t.addEventListener('click', () => {
-      genre = GENRES.find(g => g.id===t.dataset.id);
-      searchMode = false;
-      document.getElementById('searchInput').value = '';
-      document.getElementById('clearBtn').style.display = 'none';
-      renderTabs();
-      loadSongs(CATALOG[genre.id]);
-    }));
+      ${g.emoji} ${g.label}</div>`).join('');
+  document.querySelectorAll('.tab').forEach(t => t.addEventListener('click', () => {
+    genre = GENRES.find(g => g.id === t.dataset.id);
+    document.getElementById('searchInput').value = '';
+    document.getElementById('clearBtn').style.display = 'none';
+    renderTabs();
+    loadGenre(genre);
+  }));
 }
 
-// ─────────────────────────────────────────────────────────────
-// LOAD SONGS — render skeletons then resolve IDs one by one
-// ─────────────────────────────────────────────────────────────
-async function loadSongs(catalog) {
-  if (!catalog?.length) {
+// ─── LOAD GENRE ───────────────────────────────────────────────
+async function loadGenre(g) {
+  if (genreCache[g.id]) { showSongs(genreCache[g.id]); return; }
+  showSkeletons(g);
+  try {
+    const results = await searchSongs(g.query, 12);
+    genreCache[g.id] = results;
+    showSongs(results);
+  } catch(e) {
+    document.getElementById('content').innerHTML = `
+      <div class="empty">
+        <div class="ei">❌</div>
+        <p>Could not reach your API.<br/>Check your URL is correct and the API is deployed.<br/><br/>
+        <small style="color:var(--dim)">Error: ${e.message}</small></p>
+        <button class="btn" style="margin-top:16px" onclick="resetSetup()">Change API URL</button>
+      </div>`;
+  }
+}
+
+function resetSetup() {
+  document.getElementById('setupBanner').style.display = 'block';
+  document.getElementById('genreView').style.display = 'none';
+}
+
+function showSkeletons(g) {
+  document.getElementById('content').innerHTML = `
+    <div class="slabel">${g.emoji} ${g.label}</div>
+    <div class="slist">
+      ${Array(8).fill(0).map((_,i) => `
+        <div class="loading-row" style="animation-delay:${i*.04}s">
+          <div class="lr-art shimmer" style="width:44px;height:44px;border-radius:9px;flex-shrink:0;"></div>
+          <div class="lr-lines">
+            <div class="lr-line shimmer" style="width:${55+Math.random()*30}%"></div>
+            <div class="lr-line shimmer" style="width:${30+Math.random()*25}%"></div>
+          </div>
+        </div>`).join('')}
+    </div>`;
+}
+
+// ─── SHOW SONGS ───────────────────────────────────────────────
+function showSongs(list) {
+  songs = list || [];
+  if (!songs.length) {
     document.getElementById('content').innerHTML =
-      `<div class="empty"><div class="ei">🔍</div><p>No songs found.</p></div>`;
+      `<div class="empty"><div class="ei">🎵</div><p>No songs found for this genre.</p></div>`;
     return;
   }
-
-  // Reset
-  songs = catalog.map(s => ({...s, id: null, thumb: null, ytTitle: null, loading: true}));
-  idx = -1;
-  renderSongs();
-
-  setStatus('loading', `⏳ Loading ${catalog.length} songs…`);
-
-  let loaded = 0, failed = 0;
-
-  // Resolve all in parallel — batches of 4 to avoid rate limit
-  for (let i = 0; i < songs.length; i += 4) {
-    const batch = songs.slice(i, i+4).map((s,j) => {
-      const ii = i+j;
-      return ytSearch(s.q).then(result => {
-        if (result?.id) {
-          songs[ii] = {...s, ...result, loading: false};
-          loaded++;
-        } else {
-          songs[ii] = {...s, loading: false, failed: true};
-          failed++;
-        }
-        updateCard(ii);
-        setStatus('loading', `⏳ Loading… ${loaded+failed}/${songs.length}`);
-      });
-    });
-    await Promise.all(batch);
-  }
-
-  if (failed === songs.length) {
-    const hint = window._ytApiError
-      ? `❌ API error: ${window._ytApiError.slice(0,80)}`
-      : '❌ Could not load. Fix: Go to Google Cloud Console → your API key → Application Restrictions → set to "None" or add your Vercel domain';
-    setStatus('err', hint);
-  } else if (failed > 0) {
-    setStatus('ok', `✅ ${loaded} songs ready · ${failed} unavailable in your region`);
-  } else {
-    setStatus('ok', `✅ ${loaded} songs ready`);
-    setTimeout(() => document.getElementById('statusBar').style.display='none', 3000);
-  }
-}
-
-function setStatus(type, msg) {
-  const bar = document.getElementById('statusBar');
-  bar.style.display = 'flex';
-  bar.className = `status ${type}`;
-  document.getElementById('statusMsg').textContent = msg;
-}
-
-// ─────────────────────────────────────────────────────────────
-// RENDER — skeletons first, update progressively
-// ─────────────────────────────────────────────────────────────
-function renderSongs() {
   const g = genre;
   const feat = songs.slice(0, 4);
-  const list = songs.slice(4);
+  const rest = songs.slice(4);
 
   document.getElementById('content').innerHTML = `
     <div class="slabel">${g.emoji} ${g.label} — Featured</div>
-    <div class="strip" id="featStrip">
+    <div class="strip">
       ${feat.map((s,i) => `
-        <div class="scard loading" data-i="${i}" style="animation-delay:${i*.06}s">
-          <div class="card-ph shimmer" id="cph${i}">${g.emoji}</div>
+        <div class="scard" data-i="${i}" style="animation-delay:${i*.06}s">
+          <div class="scard-art">
+            ${s.image
+              ? `<img src="${s.image}" alt="${s.title}" loading="lazy" onerror="this.parentNode.innerHTML='<div class=scard-art-ph>${g.emoji}</div>'">`
+              : `<div class="scard-art-ph">${g.emoji}</div>`}
+          </div>
           <div class="scard-body">
             <div class="scard-title">${s.title}</div>
-            <div class="scard-ytitle" id="cytitle${i}"></div>
+            <div class="scard-sub">${s.artist}</div>
           </div>
         </div>`).join('')}
     </div>
-
     <div class="slabel">🎵 All Songs (${songs.length})</div>
-    <div class="slist" id="songList">
-      ${list.map((s,i) => {
+    <div class="slist">
+      ${rest.map((s,i) => {
         const ii = i+4;
         return `
-        <div class="srow loading" data-i="${ii}" style="animation-delay:${i*.025}s">
+        <div class="srow" data-i="${ii}" style="animation-delay:${i*.025}s">
           <div class="snum">${ii+1}</div>
           <div class="sbars"><span></span><span></span><span></span><span></span></div>
-          <div class="row-ph" id="rph${ii}">${g.emoji}</div>
+          ${s.image
+            ? `<div class="row-art"><img src="${s.image}" alt="${s.title}" loading="lazy" onerror="this.parentNode.outerHTML='<div class=row-art-ph>${g.emoji}</div>'"></div>`
+            : `<div class="row-art-ph">${g.emoji}</div>`}
           <div class="srow-meta">
             <div class="srow-title">${s.title}</div>
-            <div class="srow-detail">${s.artist}${s.movie?' · '+s.movie:''}</div>
-            <div class="srow-ytitle" id="ryt${ii}"></div>
+            <div class="srow-sub">${s.artist}${s.album?' · '+s.album:''}</div>
           </div>
         </div>`;
       }).join('')}
     </div>`;
 
-  attachClicks();
+  document.querySelectorAll('.scard').forEach(el => el.addEventListener('click', () => play(+el.dataset.i)));
+  document.querySelectorAll('.srow').forEach(el => el.addEventListener('click', () => play(+el.dataset.i)));
 }
 
-function updateCard(i) {
+// ─── PLAY ─────────────────────────────────────────────────────
+async function play(i) {
   const s = songs[i];
-  const el = document.querySelector(`[data-i="${i}"]`);
-  if (!el) return;
-
-  el.classList.remove('loading');
-
-  if (s.failed) {
-    el.style.opacity = '0.35';
-    el.style.pointerEvents = 'none';
-    el.title = 'Not available';
-    return;
-  }
-
-  if (!s.id) return;
-
-  const featured = i < 4;
-
-  if (featured) {
-    // Replace shimmer placeholder with real thumbnail
-    const ph = document.getElementById(`cph${i}`);
-    if (ph) {
-      const img = document.createElement('img');
-      img.className = 'card-thumb';
-      img.src = s.thumb || `https://img.youtube.com/vi/${s.id}/mqdefault.jpg`;
-      img.alt = s.title;
-      img.onerror = () => { img.src = `https://img.youtube.com/vi/${s.id}/mqdefault.jpg`; };
-      ph.replaceWith(img);
-    }
-    // Show actual YouTube title if different
-    const yt = document.getElementById(`cytitle${i}`);
-    if (yt && s.ytTitle) yt.textContent = s.ytTitle;
-  } else {
-    // Row thumbnail
-    const ph = document.getElementById(`rph${i}`);
-    if (ph) {
-      const img = document.createElement('img');
-      img.className = 'row-thumb';
-      img.src = s.thumb || `https://img.youtube.com/vi/${s.id}/mqdefault.jpg`;
-      img.alt = s.title;
-      img.onerror = () => { img.src = `https://img.youtube.com/vi/${s.id}/mqdefault.jpg`; };
-      ph.replaceWith(img);
-    }
-    const yt = document.getElementById(`ryt${i}`);
-    if (yt && s.ytTitle) yt.textContent = s.ytTitle;
-  }
-
-  attachClicks();
-}
-
-function attachClicks() {
-  document.querySelectorAll('.scard:not(.loading):not([data-bound])').forEach(el => {
-    el.dataset.bound = '1';
-    el.addEventListener('click', () => {
-      const s = songs[+el.dataset.i];
-      if (s?.id) play(+el.dataset.i);
-    });
-  });
-  document.querySelectorAll('.srow:not(.loading):not([data-bound])').forEach(el => {
-    el.dataset.bound = '1';
-    el.addEventListener('click', () => {
-      const s = songs[+el.dataset.i];
-      if (s?.id) play(+el.dataset.i);
-    });
-  });
-}
-
-// ─────────────────────────────────────────────────────────────
-// PLAY
-// ─────────────────────────────────────────────────────────────
-function play(i) {
-  const s = songs[i];
-  if (!s?.id) return;
+  if (!s) return;
   idx = i;
 
-  document.getElementById('pthumb').innerHTML =
-    `<img src="${s.thumb||`https://img.youtube.com/vi/${s.id}/hqdefault.jpg`}"
-      onerror="this.parentNode.textContent='${genre.emoji}'"
-      style="width:100%;height:100%;object-fit:cover;display:block;"/>`;
-
+  // Update mini player
   document.getElementById('ptitle').textContent = s.title;
-  document.getElementById('psub').textContent = s.artist + (s.movie?' · '+s.movie:'');
-  document.getElementById('petitle').textContent = s.title;
-  document.getElementById('pesub').textContent = (s.ytTitle||s.artist) + (s.movie?' · '+s.movie:'');
+  document.getElementById('psub').textContent = s.artist + (s.album ? ' · ' + s.album : '');
+  document.getElementById('partWrap').outerHTML = s.image
+    ? `<div class="part" id="partWrap"><img src="${s.image}" alt="${s.title}" onerror="this.parentNode.innerHTML='🎵'"/></div>`
+    : `<div class="part-ph" id="partWrap">🎵</div>`;
 
-  document.getElementById('ytbox').innerHTML =
-    `<iframe src="https://www.youtube.com/embed/${s.id}?autoplay=1&rel=0&modestbranding=1"
-      allow="autoplay;encrypted-media" allowfullscreen
-      style="width:100%;height:100%;border:none;display:block;"></iframe>`;
-
-  document.getElementById('ppB').textContent = '⏸';
-  document.getElementById('player').classList.add('open');
+  document.getElementById('audioTitle').textContent = s.title;
+  document.getElementById('audioSub').textContent = s.artist + (s.album ? ' · ' + s.album : '');
+  document.getElementById('audioArt').src = s.image || '';
+  document.getElementById('audioArt').style.display = s.image ? 'block' : 'none';
   document.getElementById('favB').textContent = favs.includes(s.id) ? '❤️ Saved' : '🤍 Favourite';
 
-  document.querySelectorAll('.scard,.srow').forEach(el =>
-    el.classList.toggle('on', +el.dataset.i === i));
+  const audio = document.getElementById('audioEl');
+
+  // If we have a direct URL, use it
+  if (s.url) {
+    audio.src = s.url;
+    audio.play().catch(()=>{});
+    document.getElementById('ppB').textContent = '⏸';
+  } else {
+    // Fetch song details to get stream URL
+    showToast('Loading…');
+    try {
+      const r = await fetch(`${apiBase}/songs/${s.id}`);
+      const data = await r.json();
+      const song = data?.data?.[0] || data?.data || data;
+      const streamUrl = song?.downloadUrl?.[4]?.url || song?.downloadUrl?.[3]?.url || song?.media_url || '';
+      if (streamUrl) {
+        s.url = streamUrl; // cache
+        audio.src = streamUrl;
+        audio.play().catch(()=>{});
+        document.getElementById('ppB').textContent = '⏸';
+      } else {
+        showToast('Stream not available — try another song');
+      }
+    } catch(e) {
+      showToast('Could not load song');
+    }
+  }
+
+  document.getElementById('player').classList.add('open');
+  if (!expanded) toggleExp();
+  document.querySelectorAll('.scard,.srow').forEach(el => el.classList.toggle('on', +el.dataset.i === i));
 }
 
-// ─────────────────────────────────────────────────────────────
-// CONTROLS
-// ─────────────────────────────────────────────────────────────
-document.getElementById('prevB').addEventListener('click', e => {
-  e.stopPropagation();
-  for (let i=idx-1; i>=0; i--) { if(songs[i]?.id){play(i);break;} }
-});
-document.getElementById('nextB').addEventListener('click', e => {
-  e.stopPropagation();
-  for (let i=idx+1; i<songs.length; i++) { if(songs[i]?.id){play(i);break;} }
-});
+// ─── CONTROLS ─────────────────────────────────────────────────
+const audio = document.getElementById('audioEl');
+
+audio.addEventListener('ended', () => { if(idx < songs.length-1) play(idx+1); });
+
+document.getElementById('prevB').addEventListener('click', e => { e.stopPropagation(); if(idx>0) play(idx-1); });
+document.getElementById('nextB').addEventListener('click', e => { e.stopPropagation(); if(idx<songs.length-1) play(idx+1); });
 document.getElementById('ppB').addEventListener('click', e => {
   e.stopPropagation();
-  const f = document.querySelector('#ytbox iframe');
-  if (!f) return;
-  if (f.src.includes('autoplay=1')) {
-    f.src = f.src.replace('autoplay=1','autoplay=0');
-    document.getElementById('ppB').textContent = '▶';
-  } else {
-    f.src = f.src.replace('autoplay=0','autoplay=1');
-    document.getElementById('ppB').textContent = '⏸';
-  }
+  if (audio.paused) { audio.play(); document.getElementById('ppB').textContent='⏸'; }
+  else { audio.pause(); document.getElementById('ppB').textContent='▶'; }
 });
 
 function toggleExp() {
@@ -622,58 +484,57 @@ document.getElementById('expB').addEventListener('click', e => { e.stopPropagati
 document.getElementById('ph').addEventListener('click', toggleExp);
 document.getElementById('pmini').addEventListener('click', toggleExp);
 
-document.getElementById('ytB').addEventListener('click', () => {
-  const s = songs[idx];
-  if (s?.id) window.open(`https://youtu.be/${s.id}`, '_blank');
+document.getElementById('favB').addEventListener('click', () => {
+  const s = songs[idx]; if(!s) return;
+  const i = favs.indexOf(s.id);
+  if(i>=0){favs.splice(i,1);document.getElementById('favB').textContent='🤍 Favourite';}
+  else{favs.push(s.id);document.getElementById('favB').textContent='❤️ Saved';}
+  localStorage.setItem(FAV_KEY, JSON.stringify(favs));
 });
 document.getElementById('shareB').addEventListener('click', () => {
-  const s = songs[idx];
-  if (!s?.id) return;
-  const url = `https://youtu.be/${s.id}`;
-  if (navigator.share) navigator.share({title:s.title, text:s.artist, url});
-  else { navigator.clipboard?.writeText(url).then(()=>alert('Link copied!')); }
+  const s = songs[idx]; if(!s) return;
+  const url = s.saavnUrl || `https://www.jiosaavn.com/search/${encodeURIComponent(s.title)}`;
+  if(navigator.share) navigator.share({title:s.title, text:s.artist, url});
+  else { navigator.clipboard?.writeText(url); showToast('Link copied!'); }
 });
-document.getElementById('favB').addEventListener('click', () => {
-  const s = songs[idx];
-  if (!s?.id) return;
-  const i = favs.indexOf(s.id);
-  if (i>=0) { favs.splice(i,1); document.getElementById('favB').textContent='🤍 Favourite'; }
-  else { favs.push(s.id); document.getElementById('favB').textContent='❤️ Saved'; }
-  localStorage.setItem('sm_f', JSON.stringify(favs));
+document.getElementById('saavnBtn').addEventListener('click', () => {
+  const s = songs[idx]; if(!s) return;
+  const url = s.saavnUrl || `https://www.jiosaavn.com/search/${encodeURIComponent(s.title)}`;
+  window.open(url, '_blank');
 });
 
-// ─────────────────────────────────────────────────────────────
-// SEARCH
-// ─────────────────────────────────────────────────────────────
+// ─── SEARCH ───────────────────────────────────────────────────
 let st;
 document.getElementById('searchInput').addEventListener('input', e => {
   const q = e.target.value.trim();
   document.getElementById('clearBtn').style.display = q ? 'block' : 'none';
   clearTimeout(st);
-  if (!q) { searchMode=false; renderTabs(); loadSongs(CATALOG[genre.id]); return; }
-  st = setTimeout(() => {
-    searchMode = true;
-    const results = allCatalog.filter(s =>
-      s.title.toLowerCase().includes(q.toLowerCase()) ||
-      s.artist.toLowerCase().includes(q.toLowerCase()) ||
-      s.movie.toLowerCase().includes(q.toLowerCase()));
-    loadSongs(results);
-  }, 350);
+  if (!q) { if(apiBase) loadGenre(genre); return; }
+  if (!apiBase) return;
+  st = setTimeout(async () => {
+    showSkeletons(genre);
+    try {
+      const results = await searchSongs(q, 20);
+      showSongs(results);
+    } catch(e) { showToast('Search failed: ' + e.message); }
+  }, 500);
 });
 document.getElementById('clearBtn').addEventListener('click', () => {
   document.getElementById('searchInput').value = '';
   document.getElementById('clearBtn').style.display = 'none';
-  searchMode = false;
-  loadSongs(CATALOG[genre.id]);
+  if(apiBase) loadGenre(genre);
 });
 
-// ─────────────────────────────────────────────────────────────
-// PWA + INIT
-// ─────────────────────────────────────────────────────────────
-if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(()=>{});
+// ─── TOAST ────────────────────────────────────────────────────
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
 
-renderTabs();
-loadSongs(CATALOG[genre.id]);
+// ─── PWA ──────────────────────────────────────────────────────
+if('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(()=>{});
 </script>
 </body>
 </html>
