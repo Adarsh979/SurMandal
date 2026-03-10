@@ -325,38 +325,49 @@ const allCatalog = Object.entries(CATALOG).flatMap(([gid,list]) =>
 // ─────────────────────────────────────────────────────────────
 async function ytSearch(q) {
   if (cache[q]) return cache[q];
+
+  // Try /api/search serverless first (works on Vercel, key is server-side)
   try {
-    // On Vercel: use serverless route (no CORS)
-    // On localhost/preview: try direct API
-    let data;
-    try {
-      const r = await fetch(`/api/search?q=${encodeURIComponent(q)}`, {signal: AbortSignal.timeout(8000)});
-      if (r.ok) data = await r.json();
-    } catch(e) {}
-
-    // Fallback: direct API (works on hosted domains)
-    if (!data?.id) {
-      const key = 'AIzaSyCFHRCWImY1thLi20nBSZpgMGW3UBfRfYg';
-      const apiUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&maxResults=1&videoCategoryId=10&q=${encodeURIComponent(q)}&key=${key}`;
-      const r2 = await fetch(apiUrl, {signal: AbortSignal.timeout(8000)});
-      if (r2.ok) {
-        const raw = await r2.json();
-        if (raw.items?.length) {
-          const item = raw.items[0];
-          data = {
-            id: item.id.videoId,
-            thumb: item.snippet.thumbnails?.medium?.url,
-            ytTitle: item.snippet.title,
-          };
-        }
-      }
-    }
-
+    const r = await fetch(`/api/search?q=${encodeURIComponent(q)}`, {signal: AbortSignal.timeout(10000)});
+    const data = await r.json();
     if (data?.id) {
-      cache[q] = data;
-      return data;
+      cache[q] = {id: data.id, thumb: data.thumb, ytTitle: data.title};
+      return cache[q];
     }
-  } catch(e) {}
+    if (data?.error) console.warn('API route error:', data.error, 'code:', data.code);
+  } catch(e) {
+    console.warn('Serverless route failed (normal in local preview):', e.message);
+  }
+
+  // Fallback: call YouTube directly from browser
+  // Works when key has NO restrictions or "HTTP referrers" includes this domain
+  try {
+    const key = 'AIzaSyCFHRCWImY1thLi20nBSZpgMGW3UBfRfYg';
+    const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&maxResults=1&videoCategoryId=10&q=${encodeURIComponent(q)}&key=${key}`;
+    const r = await fetch(url, {signal: AbortSignal.timeout(10000)});
+    const data = await r.json();
+    if (data?.error) {
+      console.warn('Direct YT API error:', data.error.message, '| code:', data.error.code);
+      // Show helpful message on 403
+      if (data.error.code === 403) {
+        window._ytApiError = data.error.message;
+      }
+      return null;
+    }
+    if (data?.items?.length) {
+      const item = data.items[0];
+      const result = {
+        id: item.id.videoId,
+        thumb: item.snippet.thumbnails?.medium?.url,
+        ytTitle: item.snippet.title,
+      };
+      cache[q] = result;
+      return result;
+    }
+  } catch(e) {
+    console.warn('Direct YT API fetch failed:', e.message);
+  }
+
   return null;
 }
 
@@ -419,7 +430,10 @@ async function loadSongs(catalog) {
   }
 
   if (failed === songs.length) {
-    setStatus('err', '❌ Could not load songs. Check API key or internet.');
+    const hint = window._ytApiError
+      ? `❌ API error: ${window._ytApiError.slice(0,80)}`
+      : '❌ Could not load. Fix: Go to Google Cloud Console → your API key → Application Restrictions → set to "None" or add your Vercel domain';
+    setStatus('err', hint);
   } else if (failed > 0) {
     setStatus('ok', `✅ ${loaded} songs ready · ${failed} unavailable in your region`);
   } else {
