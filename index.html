@@ -32,46 +32,49 @@ body{font-family:'Noto Sans',sans-serif;background:var(--bg);color:var(--text);m
 
 .app{position:relative;z-index:1;display:flex;flex-direction:column;min-height:100vh;padding-bottom:180px;}
 
-/* HEADER */
 header{position:sticky;top:0;z-index:200;background:rgba(7,4,15,0.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:16px 16px 0;}
 .hrow{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
 .brand{font-family:'Baloo 2',cursive;font-size:24px;font-weight:800;background:linear-gradient(110deg,#f0c040,#e8445a,#a855f7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
 .bsub{font-size:9.5px;letter-spacing:2.5px;text-transform:uppercase;color:var(--muted);margin-top:1px;}
 
-/* search */
 .sbox{display:flex;align-items:center;gap:8px;background:var(--s2);border:1px solid var(--border);border-radius:12px;padding:9px 14px;margin-bottom:13px;}
 .sbox input{flex:1;background:none;border:none;outline:none;color:var(--text);font-size:13px;font-family:'Noto Sans',sans-serif;}
 .sbox input::placeholder{color:var(--dim);}
-#clearBtn{color:var(--dim);cursor:pointer;font-size:13px;display:none;line-height:1;}
+#clearBtn{color:var(--dim);cursor:pointer;font-size:13px;display:none;line-height:1;flex-shrink:0;}
 
-/* tabs */
 .tabs{display:flex;gap:7px;overflow-x:auto;padding-bottom:13px;scrollbar-width:none;}
 .tabs::-webkit-scrollbar{display:none;}
 .tab{flex-shrink:0;display:inline-flex;align-items:center;gap:5px;padding:7px 13px;border-radius:100px;border:1px solid var(--border);background:var(--s2);cursor:pointer;font-size:12px;font-weight:500;color:var(--muted);transition:all .2s;white-space:nowrap;}
 .tab:hover{color:var(--text);border-color:rgba(255,255,255,0.15);}
 .tab.on{color:#fff;border-color:transparent;background:var(--gc,#e8445a);box-shadow:0 0 18px var(--gg,rgba(232,68,90,.4));}
 
-/* main */
 main{padding:18px 16px 8px;}
 .slabel{font-size:10px;letter-spacing:2.8px;text-transform:uppercase;color:var(--muted);margin-bottom:12px;}
 
 /* featured strip */
 .strip{display:flex;gap:10px;overflow-x:auto;padding-bottom:6px;margin-bottom:24px;scrollbar-width:none;}
 .strip::-webkit-scrollbar{display:none;}
-.scard{flex-shrink:0;width:130px;background:var(--card);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;cursor:pointer;transition:transform .2s,box-shadow .2s,border-color .2s;animation:fu .4s ease both;}
+
+.scard{flex-shrink:0;width:130px;background:var(--card);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;cursor:pointer;transition:transform .2s,box-shadow .2s;animation:fu .4s ease both;position:relative;}
 .scard:hover{transform:translateY(-5px);box-shadow:0 16px 32px rgba(0,0,0,.5);}
 .scard.on{border-color:var(--accent) !important;box-shadow:0 0 0 2px var(--accent),0 8px 24px rgba(232,68,90,.3) !important;}
-.scard-img{width:100%;aspect-ratio:16/9;object-fit:cover;display:block;background:var(--s2);}
-.scard-ph{width:100%;aspect-ratio:16/9;background:linear-gradient(135deg,var(--s2),var(--s1));display:flex;align-items:center;justify-content:center;font-size:28px;}
+.scard.loading .scard-body{opacity:.5;}
+.card-thumb{width:100%;aspect-ratio:16/9;object-fit:cover;display:block;background:var(--s2);}
+.card-ph{width:100%;aspect-ratio:16/9;background:linear-gradient(135deg,var(--s2),var(--s1));display:flex;align-items:center;justify-content:center;font-size:28px;}
 .scard-body{padding:8px 9px 10px;}
 .scard-title{font-size:11px;font-weight:600;line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
-.scard-artist{font-size:10px;color:var(--muted);margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.scard-ytitle{font-size:9.5px;color:var(--muted);margin-top:2px;display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden;font-style:italic;}
+
+/* loading shimmer */
+.shimmer{background:linear-gradient(90deg,var(--s2) 25%,var(--s1) 50%,var(--s2) 75%);background-size:200% 100%;animation:shimmer 1.5s infinite;}
+@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
 
 /* song list */
 .slist{display:flex;flex-direction:column;gap:1px;}
 .srow{display:flex;align-items:center;gap:11px;padding:9px 10px;border-radius:11px;cursor:pointer;transition:background .15s;animation:fu .3s ease both;border:1px solid transparent;}
 .srow:hover{background:var(--s2);}
 .srow.on{background:rgba(232,68,90,.08);border-color:rgba(232,68,90,.2);}
+.srow.loading{opacity:.6;pointer-events:none;}
 .snum{width:22px;text-align:center;font-size:12px;color:var(--dim);flex-shrink:0;}
 .srow.on .snum{display:none;}
 .sbars{display:none;gap:2px;align-items:flex-end;height:16px;width:22px;flex-shrink:0;}
@@ -82,12 +85,12 @@ main{padding:18px 16px 8px;}
 .sbars span:nth-child(3){height:7px;animation-delay:.24s}
 .sbars span:nth-child(4){height:15px;animation-delay:.36s}
 @keyframes bz{0%,100%{transform:scaleY(.4)}50%{transform:scaleY(1)}}
-.srow-img{width:42px;height:42px;border-radius:9px;object-fit:cover;flex-shrink:0;}
-.srow-ph{width:42px;height:42px;border-radius:9px;flex-shrink:0;background:var(--s2);display:flex;align-items:center;justify-content:center;font-size:18px;}
+.row-thumb{width:42px;height:42px;border-radius:9px;object-fit:cover;flex-shrink:0;background:var(--s2);}
+.row-ph{width:42px;height:42px;border-radius:9px;flex-shrink:0;background:var(--s2);display:flex;align-items:center;justify-content:center;font-size:18px;}
 .srow-meta{flex:1;min-width:0;}
 .srow-title{font-size:13px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.srow-ytitle{font-size:10px;color:rgba(238,232,255,0.3);margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-style:italic;}
 .srow-detail{font-size:11px;color:var(--muted);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.srow-dur{font-size:11px;color:var(--dim);flex-shrink:0;}
 
 @keyframes fu{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 
@@ -95,11 +98,16 @@ main{padding:18px 16px 8px;}
 .empty .ei{font-size:44px;margin-bottom:14px;}
 .empty p{font-size:13px;line-height:1.7;}
 
+/* status bar */
+.status{display:flex;align-items:center;gap:8px;padding:10px 14px;background:rgba(240,192,64,0.07);border:1px solid rgba(240,192,64,0.15);border-radius:10px;margin-bottom:16px;font-size:11px;color:rgba(240,192,64,0.7);}
+.status.ok{background:rgba(22,163,74,0.07);border-color:rgba(22,163,74,0.15);color:rgba(134,239,172,0.7);}
+.status.err{background:rgba(232,68,90,0.07);border-color:rgba(232,68,90,0.15);color:rgba(255,150,160,0.8);}
+#statusBar{display:none;}
+
 /* PLAYER */
 #player{position:fixed;bottom:0;left:0;right:0;z-index:300;background:rgba(7,4,15,0.97);backdrop-filter:blur(28px);border-top:1px solid var(--border);transform:translateY(100%);transition:transform .35s cubic-bezier(.34,1.2,.64,1);}
 #player.open{transform:translateY(0);}
 .ph{width:34px;height:4px;border-radius:2px;background:rgba(255,255,255,0.12);margin:10px auto 0;cursor:pointer;}
-
 .pmini{display:flex;align-items:center;gap:11px;padding:10px 16px 12px;cursor:pointer;}
 .pthumb{width:44px;height:44px;border-radius:10px;flex-shrink:0;background:var(--s2);display:flex;align-items:center;justify-content:center;font-size:22px;overflow:hidden;}
 .pthumb img{width:100%;height:100%;object-fit:cover;display:block;}
@@ -111,18 +119,16 @@ main{padding:18px 16px 8px;}
 .pb:hover{background:var(--s2);}
 .pb.pp{width:40px;height:40px;background:var(--accent);color:#fff;font-size:13px;}
 .pb.pp:hover{background:#f0566e;}
-
 .pexp{display:none;padding:0 16px;padding-bottom:calc(16px + env(safe-area-inset-bottom));}
 .pexp.on{display:block;}
 .ytbox{border-radius:13px;overflow:hidden;background:#000;aspect-ratio:16/9;margin-bottom:14px;}
 .ytbox iframe{width:100%;height:100%;border:none;display:block;}
-.petitle{font-size:15px;font-weight:700;margin-bottom:3px;line-height:1.3;}
-.pesub{font-size:12px;color:var(--muted);margin-bottom:14px;}
+.petitle{font-size:14px;font-weight:700;margin-bottom:2px;line-height:1.3;}
+.pesub{font-size:11px;color:var(--muted);margin-bottom:14px;}
 .pebtns{display:flex;gap:8px;}
 .pbtn2{flex:1;padding:11px 8px;border-radius:11px;border:1px solid var(--border);background:var(--s2);color:var(--text);font-size:12px;font-family:'Noto Sans',sans-serif;cursor:pointer;transition:all .2s;text-align:center;}
 .pbtn2:hover{background:rgba(255,255,255,.07);}
 .pbtn2.pri{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:600;}
-.pbtn2.pri:hover{background:#f0566e;}
 </style>
 </head>
 <body>
@@ -145,6 +151,7 @@ main{padding:18px 16px 8px;}
 </header>
 
 <main id="main">
+  <div class="status" id="statusBar"><span id="statusIcon">⏳</span><span id="statusMsg"></span></div>
   <div id="content"></div>
 </main>
 </div>
@@ -155,7 +162,7 @@ main{padding:18px 16px 8px;}
   <div class="pmini" id="pmini">
     <div class="pthumb" id="pthumb">🎵</div>
     <div class="pmeta">
-      <div class="ptitle" id="ptitle">Choose a song to play</div>
+      <div class="ptitle" id="ptitle">Choose a song</div>
       <div class="psub" id="psub">SurMandal</div>
     </div>
     <div class="pctrl">
@@ -180,9 +187,9 @@ main{padding:18px 16px 8px;}
 </div>
 
 <script>
-// ─────────────────────────────────────────
+// ─────────────────────────────────────────────────────────────
 // GENRES
-// ─────────────────────────────────────────
+// ─────────────────────────────────────────────────────────────
 const GENRES = [
   {id:'romantic',   label:'Romantic',         emoji:'💕', color:'#e8445a', glow:'rgba(232,68,90,.4)'},
   {id:'retro',      label:'Retro Classics',    emoji:'📻', color:'#d4900a', glow:'rgba(212,144,10,.4)'},
@@ -193,134 +200,169 @@ const GENRES = [
   {id:'latest',     label:'Latest 2025',       emoji:'🔥', color:'#e8445a', glow:'rgba(232,68,90,.4)'},
 ];
 
-// ─────────────────────────────────────────
-// SONGS — each has a verified YouTube ID
-// Thumbnails pulled directly from YouTube CDN (no API needed)
-// ─────────────────────────────────────────
-const SONGS = {
+// ─────────────────────────────────────────────────────────────
+// SONG CATALOG — search queries crafted to find exact songs
+// The /api/search serverless function runs these on the server
+// ─────────────────────────────────────────────────────────────
+const CATALOG = {
   romantic: [
-    {id:'Umqb9KENgmk', title:'Tum Hi Ho',            artist:'Arijit Singh',         movie:'Aashiqui 2'},
-    {id:'zbQd2eSgBEo', title:'Channa Mereya',         artist:'Arijit Singh',         movie:'Ae Dil Hai Mushkil'},
-    {id:'sVnD5ZRKQHM', title:'Kal Ho Naa Ho',         artist:'Sonu Nigam',           movie:'Kal Ho Naa Ho'},
-    {id:'SB-vXCOJLb0', title:'Dil Diyan Gallan',      artist:'Atif Aslam',           movie:'Tiger Zinda Hai'},
-    {id:'_dK2tDK9grQ', title:'Jeena Jeena',            artist:'Atif Aslam',           movie:'Badlapur'},
-    {id:'FfFv_i7ZqSI', title:'Khairiyat',              artist:'Arijit Singh',         movie:'Chhichhore'},
-    {id:'mGMRWtomXBM', title:'Tera Ban Jaunga',        artist:'Akhil · Tulsi Kumar',  movie:'Kabir Singh'},
-    {id:'Bnl9nJFj6bA', title:'Raataan Lambiyan',       artist:'Jubin Nautiyal',       movie:'Shershaah'},
-    {id:'TRqeOhd-h7A', title:'Ae Dil Hai Mushkil',    artist:'Arijit Singh',         movie:'ADHM'},
-    {id:'BddP6PYo2gs', title:'Kesariya',               artist:'Arijit Singh',         movie:'Brahmastra'},
-    {id:'YcP_D4rORKg', title:'Ik Vaari Aa',            artist:'Arijit Singh',         movie:'Raabta'},
-    {id:'D5mXJEKJWjk', title:'Tere Vaaste',            artist:'Varun Jain',           movie:'Zara Hatke'},
+    {title:'Tum Hi Ho',            artist:'Arijit Singh',          movie:'Aashiqui 2',              q:'Tum Hi Ho Arijit Singh Aashiqui 2 official video'},
+    {title:'Channa Mereya',        artist:'Arijit Singh',          movie:'Ae Dil Hai Mushkil',      q:'Channa Mereya full video Ae Dil Hai Mushkil'},
+    {title:'Kal Ho Naa Ho',        artist:'Sonu Nigam',            movie:'Kal Ho Naa Ho',           q:'Kal Ho Naa Ho title song Sonu Nigam official'},
+    {title:'Dil Diyan Gallan',     artist:'Atif Aslam',            movie:'Tiger Zinda Hai',         q:'Dil Diyan Gallan full video Tiger Zinda Hai'},
+    {title:'Jeena Jeena',          artist:'Atif Aslam',            movie:'Badlapur',                q:'Jeena Jeena Atif Aslam Badlapur official'},
+    {title:'Khairiyat',            artist:'Arijit Singh',          movie:'Chhichhore',              q:'Khairiyat Arijit Singh Chhichhore official'},
+    {title:'Tera Ban Jaunga',      artist:'Akhil · Tulsi Kumar',   movie:'Kabir Singh',             q:'Tera Ban Jaunga Kabir Singh official video'},
+    {title:'Raataan Lambiyan',     artist:'Jubin Nautiyal',        movie:'Shershaah',               q:'Raataan Lambiyan Shershaah official video'},
+    {title:'Ae Dil Hai Mushkil',   artist:'Arijit Singh',          movie:'ADHM',                    q:'Ae Dil Hai Mushkil title song full video official'},
+    {title:'Kesariya',             artist:'Arijit Singh',          movie:'Brahmastra',              q:'Kesariya Brahmastra full video official'},
+    {title:'Ik Vaari Aa',          artist:'Arijit Singh',          movie:'Raabta',                  q:'Ik Vaari Aa Arijit Singh Raabta official'},
+    {title:'Tere Vaaste',          artist:'Varun Jain',            movie:'Zara Hatke',              q:'Tere Vaaste Zara Hatke Zara Bachke official video'},
   ],
   retro: [
-    {id:'V7lbBF3iYuI', title:'Mere Sapno Ki Rani',    artist:'Kishore Kumar',        movie:'Aradhana'},
-    {id:'Z9L-3-v7xes', title:'Yeh Shaam Mastani',     artist:'Kishore Kumar',        movie:'Kati Patang'},
-    {id:'kfYnAOmM-4k', title:'Gulabi Aankhen',         artist:'Mohammed Rafi',        movie:'The Train'},
-    {id:'2n5MMN8TGMs', title:'Roop Tera Mastana',      artist:'Kishore Kumar',        movie:'Aradhana'},
-    {id:'OD4d7Lklc44', title:'Dum Maro Dum',           artist:'Asha Bhosle',          movie:'Hare Rama Hare Krishna'},
-    {id:'ZWyy_gH3KT4', title:'Kabhi Kabhi',            artist:'Mukesh',               movie:'Kabhi Kabhie'},
-    {id:'H9PVBGqI_ms', title:'Pyaar Kiya To Darna Kya',artist:'Lata Mangeshkar',     movie:'Mughal-E-Azam'},
-    {id:'UEf2CVq2IRI', title:'Zindagi Ek Safar',       artist:'Kishore Kumar',        movie:'Andaz'},
-    {id:'cDqwMWA6LHU', title:'Kuch Toh Hua Hai',       artist:'KK',                   movie:'Kal Ho Naa Ho'},
-    {id:'nfcxi4-eFo0', title:'Tere Mere Sapne',        artist:'Mohammed Rafi',        movie:'Guide'},
-    {id:'YxkGktj73c0', title:'Lag Ja Gale',            artist:'Lata Mangeshkar',      movie:'Woh Kaun Thi'},
-    {id:'p-_BPMnFRsE', title:'O Mere Dil Ke Chain',    artist:'Kishore Kumar',        movie:'Mere Jeevan Saathi'},
+    {title:'Mere Sapno Ki Rani',   artist:'Kishore Kumar',         movie:'Aradhana',                q:'Mere Sapno Ki Rani Kishore Kumar Aradhana official'},
+    {title:'Yeh Shaam Mastani',    artist:'Kishore Kumar',         movie:'Kati Patang',             q:'Yeh Shaam Mastani Kishore Kumar Kati Patang'},
+    {title:'Gulabi Aankhen',       artist:'Mohammed Rafi',         movie:'The Train',               q:'Gulabi Aankhen Mohammed Rafi The Train official'},
+    {title:'Roop Tera Mastana',    artist:'Kishore Kumar',         movie:'Aradhana',                q:'Roop Tera Mastana Kishore Kumar Aradhana'},
+    {title:'Dum Maro Dum',         artist:'Asha Bhosle',           movie:'Hare Rama Hare Krishna',  q:'Dum Maro Dum Asha Bhosle official'},
+    {title:'Kabhi Kabhi Mere Dil', artist:'Mukesh',                movie:'Kabhi Kabhie',            q:'Kabhi Kabhi Mere Dil Mein Mukesh Kabhi Kabhie official'},
+    {title:'Pyaar Kiya To Darna Kya',artist:'Lata Mangeshkar',    movie:'Mughal-E-Azam',           q:'Pyaar Kiya To Darna Kya Lata Mangeshkar Mughal-E-Azam'},
+    {title:'Zindagi Ek Safar',     artist:'Kishore Kumar',         movie:'Andaz',                   q:'Zindagi Ek Safar Hai Suhana Kishore Kumar Andaz'},
+    {title:'Lag Ja Gale',          artist:'Lata Mangeshkar',       movie:'Woh Kaun Thi',            q:'Lag Ja Gale Lata Mangeshkar Woh Kaun Thi official'},
+    {title:'Tere Mere Sapne',      artist:'Mohammed Rafi',         movie:'Guide',                   q:'Tere Mere Sapne Mohammed Rafi Guide official'},
+    {title:'O Mere Dil Ke Chain',  artist:'Kishore Kumar',         movie:'Mere Jeevan Saathi',      q:'O Mere Dil Ke Chain Kishore Kumar official'},
+    {title:'Kuch Toh Hua Hai',     artist:'KK',                    movie:'Kal Ho Naa Ho',           q:'Kuch Toh Hua Hai KK Kal Ho Naa Ho official'},
   ],
   party: [
-    {id:'hF-l0GiVIRQ', title:'Zingaat',                artist:'Ajay-Atul',            movie:'Sairat (Hindi)'},
-    {id:'bqIxCtEcgj8', title:'Gallan Goodiyaan',        artist:'Various',              movie:'Dil Dhadakne Do'},
-    {id:'rSoMGDdGdE4', title:'Badtameez Dil',           artist:'Benny Dayal',          movie:'Yeh Jawaani Hai Deewani'},
-    {id:'YR12Z8f1Dh8', title:'Balam Pichkari',          artist:'Shalmali Kholgade',    movie:'Yeh Jawaani Hai Deewani'},
-    {id:'0lPQZni7I18', title:'Kala Chashma',            artist:'Badshah',              movie:'Baar Baar Dekho'},
-    {id:'C3vJDp7akuA', title:'Swag Se Swagat',          artist:'Vishal Dadlani',       movie:'Tiger Zinda Hai'},
-    {id:'eMXebAXFOyg', title:'Tamma Tamma Again',       artist:'Badshah',              movie:'Judwaa 2'},
-    {id:'gvyUCbQCLbA', title:'Bijlee Bijlee',           artist:'Harrdy Sandhu',        movie:''},
-    {id:'lzYNP-iyS4Y', title:'Apsara Aali',             artist:'Ajay-Atul',            movie:'Natarang'},
-    {id:'2Vv-BfVoq4g', title:'Senorita',                artist:'Shaan',                movie:'Zindagi Na Milegi Dobara'},
-    {id:'k4yXQeSCFqk', title:'Lungi Dance',             artist:'Yo Yo Honey Singh',    movie:'Chennai Express'},
-    {id:'RainRWKGH6Y', title:'Morni Banke',             artist:'Neha Kakkar',          movie:'Badhaai Do'},
+    {title:'Zingaat',              artist:'Ajay-Atul',             movie:'Dhadak',                  q:'Zingaat Hindi Dhadak official video'},
+    {title:'Gallan Goodiyaan',     artist:'Various',               movie:'Dil Dhadakne Do',         q:'Gallan Goodiyaan full video Dil Dhadakne Do'},
+    {title:'Badtameez Dil',        artist:'Benny Dayal',           movie:'Yeh Jawaani Hai Deewani', q:'Badtameez Dil full video Yeh Jawaani Hai Deewani'},
+    {title:'Balam Pichkari',       artist:'Shalmali Kholgade',     movie:'Yeh Jawaani Hai Deewani', q:'Balam Pichkari full video Yeh Jawaani Hai Deewani'},
+    {title:'Kala Chashma',         artist:'Badshah',               movie:'Baar Baar Dekho',         q:'Kala Chashma full video Baar Baar Dekho official'},
+    {title:'Swag Se Swagat',       artist:'Vishal Dadlani',        movie:'Tiger Zinda Hai',         q:'Swag Se Swagat full video Tiger Zinda Hai'},
+    {title:'Tamma Tamma Again',    artist:'Badshah',               movie:'Judwaa 2',                q:'Tamma Tamma Again full video Judwaa 2'},
+    {title:'Bijlee Bijlee',        artist:'Harrdy Sandhu',         movie:'',                        q:'Bijlee Bijlee Harrdy Sandhu official music video'},
+    {title:'Apsara Aali',          artist:'Ajay-Atul',             movie:'Natarang',                q:'Apsara Aali full song Natarang official'},
+    {title:'Senorita',             artist:'Shaan',                 movie:'Zindagi Na Milegi Dobara',q:'Senorita full video Zindagi Na Milegi Dobara'},
+    {title:'Lungi Dance',          artist:'Yo Yo Honey Singh',     movie:'Chennai Express',         q:'Lungi Dance Chennai Express official video'},
+    {title:'Morni Banke',          artist:'Neha Kakkar',           movie:'Badhaai Do',              q:'Morni Banke full video Badhaai Do official'},
   ],
   devotional: [
-    {id:'AETGcfVLXEQ', title:'Hanuman Chalisa',         artist:'Hariharan',            movie:''},
-    {id:'V8bCc48bXA8', title:'Jai Ganesh Deva',         artist:'Traditional',          movie:'Hindi Aarti'},
-    {id:'jkHnHr4PiQc', title:'Om Jai Jagdish Hare',    artist:'Traditional',          movie:'Hindi Aarti'},
-    {id:'0eIFcf-8WXM', title:'Sukhkarta Dukhharta',    artist:'Traditional',          movie:'Marathi Aarti'},
-    {id:'yGgaAhPXlJc', title:'Ganpati Bappa Morya',    artist:'Shankar Mahadevan',    movie:''},
-    {id:'EFGalFuWzmo', title:'Vitthal Vitthal',          artist:'Traditional Varkari',  movie:''},
-    {id:'AqnTyR7MSEI', title:'Kun Faya Kun',            artist:'AR Rahman',            movie:'Rockstar'},
-    {id:'8jqMtOFhqlI', title:'Aigiri Nandini',          artist:'Sanskrit Stotram',     movie:''},
-    {id:'N7UYQ9bRnJc', title:'Maha Mrityunjaya Mantra', artist:'Pandit Jasraj',        movie:''},
-    {id:'J9DvH5VdSG8', title:'Jai Jai Maharashtra',     artist:'Shankar Mahadevan',    movie:''},
-    {id:'oT2bBhMoiIg', title:'Ram Siya Ram',            artist:'Sachet-Parampara',     movie:'Adipurush'},
-    {id:'5mYQQE7IiH0', title:'Shree Ram Chandra',       artist:'Anup Jalota',          movie:''},
+    {title:'Hanuman Chalisa',      artist:'Hariharan',             movie:'',                        q:'Hanuman Chalisa Hariharan full song'},
+    {title:'Jai Ganesh Deva',      artist:'Traditional',           movie:'Aarti',                   q:'Jai Ganesh Deva Aarti full song'},
+    {title:'Om Jai Jagdish Hare',  artist:'Traditional',           movie:'Aarti',                   q:'Om Jai Jagdish Hare full Aarti'},
+    {title:'Sukhkarta Dukhharta',  artist:'Traditional',           movie:'Ganesh Aarti',            q:'Sukhkarta Dukhharta Ganpati Aarti Marathi'},
+    {title:'Ganpati Bappa Morya',  artist:'Shankar Mahadevan',     movie:'',                        q:'Ganpati Bappa Morya Shankar Mahadevan song'},
+    {title:'Vitthal Vitthal',      artist:'Varkari Bhajan',        movie:'',                        q:'Vitthal Vitthal Jai Hari Vitthal Varkari Bhajan'},
+    {title:'Kun Faya Kun',         artist:'AR Rahman',             movie:'Rockstar',                q:'Kun Faya Kun full video Rockstar AR Rahman'},
+    {title:'Ram Siya Ram',         artist:'Sachet-Parampara',      movie:'Adipurush',               q:'Ram Siya Ram full video Adipurush official'},
+    {title:'Aigiri Nandini',       artist:'Various',               movie:'',                        q:'Aigiri Nandini devotional song full'},
+    {title:'Maha Mrityunjaya Mantra',artist:'Pandit Jasraj',       movie:'',                        q:'Maha Mrityunjaya Mantra Pandit Jasraj'},
+    {title:'Jai Jai Maharashtra',  artist:'Shankar Mahadevan',     movie:'',                        q:'Jai Jai Maharashtra Majha Shankar Mahadevan'},
+    {title:'Shree Ram Chandra',    artist:'Anup Jalota',           movie:'',                        q:'Shree Ram Chandra Kripalu Bhaj Man Anup Jalota'},
   ],
   marathi: [
-    {id:'MVcEujWGMio', title:'Zingaat',                 artist:'Ajay-Atul',            movie:'Sairat (Marathi)'},
-    {id:'Cxu34n1ZHGM', title:'Yad Lagla',               artist:'Swapnil Bandodkar',    movie:'Sairat'},
-    {id:'FqIqxTw1gRo', title:'Natrang Vaju Lagla',      artist:'Ajay-Atul',            movie:'Natarang'},
-    {id:'lzYNP-iyS4Y', title:'Apsara Aali',             artist:'Ajay-Atul',            movie:'Natarang'},
-    {id:'2s1SEjNjzaA', title:'Mala Jau De',             artist:'Ajay-Atul',            movie:''},
-    {id:'zStmzKtKpCg', title:'Kombdi Palali',           artist:'Traditional',          movie:'Lokgeet'},
-    {id:'0BPOi6lEBP0', title:'Morya Re',                artist:'Shankar Mahadevan',    movie:''},
-    {id:'nCFhGXSBOSE', title:'Tula Pahile Mi',          artist:'Hriday Gattani',       movie:''},
-    {id:'A8dKAyQCfPE', title:'Swar Ye Mala',            artist:'Shreya Ghoshal',       movie:''},
-    {id:'J9DvH5VdSG8', title:'Jai Jai Maharashtra',     artist:'Shankar Mahadevan',    movie:''},
-    {id:'EFGalFuWzmo', title:'Vitthal Vitthal',          artist:'Varkari Bhajan',       movie:''},
-    {id:'0eIFcf-8WXM', title:'Sukhkarta Dukhharta',    artist:'Ganesh Aarti',         movie:''},
+    {title:'Zingaat',              artist:'Ajay-Atul',             movie:'Sairat',                  q:'Zingaat Sairat Marathi full song original'},
+    {title:'Yad Lagla',            artist:'Swapnil Bandodkar',     movie:'Sairat',                  q:'Yad Lagla Sairat Marathi full song official'},
+    {title:'Natrang Vaju Lagla',   artist:'Ajay-Atul',             movie:'Natarang',                q:'Natrang Vaju Lagla Natarang Marathi full song'},
+    {title:'Apsara Aali',          artist:'Ajay-Atul',             movie:'Natarang',                q:'Apsara Aali Natarang Marathi full song'},
+    {title:'Mala Jau De',          artist:'Ajay-Atul',             movie:'',                        q:'Mala Jau De Ajay Atul Marathi song official'},
+    {title:'Ekach Raja',           artist:'Avadhoot Gupte',        movie:'',                        q:'Ekach Raja Avadhoot Gupte Marathi song'},
+    {title:'Kombdi Palali',        artist:'Traditional',           movie:'Lokgeet',                 q:'Kombdi Palali Marathi Lokgeet original'},
+    {title:'Morya Re',             artist:'Shankar Mahadevan',     movie:'',                        q:'Morya Re Shankar Mahadevan Marathi Ganpati'},
+    {title:'Tula Pahile Mi',       artist:'Hriday Gattani',        movie:'',                        q:'Tula Pahile Mi Hriday Gattani Marathi'},
+    {title:'Swar Ye Mala',         artist:'Shreya Ghoshal',        movie:'',                        q:'Swar Ye Mala Shreya Ghoshal Marathi song'},
+    {title:'Majhya Priya Shivaji',  artist:'Various',              movie:'',                        q:'Majhya Priya Shivaji Raje Marathi song'},
+    {title:'Phulpakharu',          artist:'Vaibhav Joshi',         movie:'',                        q:'Phulpakharu Vaibhav Joshi Marathi song'},
   ],
   chill: [
-    {id:'AqnTyR7MSEI', title:'Kun Faya Kun',            artist:'AR Rahman',            movie:'Rockstar'},
-    {id:'wI_nDzG5Tlo', title:'Phir Le Aya Dil',         artist:'Arijit Singh',         movie:'Barfi'},
-    {id:'vDqHkn6YWPM', title:'Tum Se Hi',               artist:'Mohit Chauhan',        movie:'Jab We Met'},
-    {id:'KVFD5iu-4no', title:'Tujhe Bhula Diya',        artist:'Mohit Chauhan',        movie:'Anjaana Anjaani'},
-    {id:'p2WkSi2RLDI', title:'Safar',                   artist:'Jubin Nautiyal',       movie:'Jab Harry Met Sejal'},
-    {id:'hjGZLnja1fc', title:'Main Yahaan Hoon',         artist:'Udit Narayan',         movie:'Veer-Zaara'},
-    {id:'YcP_D4rORKg', title:'Ik Vaari Aa',             artist:'Arijit Singh',         movie:'Raabta'},
-    {id:'5b7HXHGTNBM', title:'Tere Liye',               artist:'Atif Aslam',           movie:'Prince'},
-    {id:'f_HpFgNMjCE', title:'Phir Mohabbat',           artist:'Arijit Singh',         movie:'Murder 2'},
-    {id:'dl_H8JwR3oo', title:'Agar Tum Saath Ho',       artist:'Arijit · Alka Yagnik', movie:'Tamasha'},
-    {id:'JUd2X0GGT68', title:'Ae Watan',                artist:'Arijit Singh',         movie:'Raazi'},
-    {id:'FfFv_i7ZqSI', title:'Khairiyat',               artist:'Arijit Singh',         movie:'Chhichhore'},
+    {title:'Kun Faya Kun',         artist:'AR Rahman',             movie:'Rockstar',                q:'Kun Faya Kun full video Rockstar official'},
+    {title:'Phir Le Aya Dil',      artist:'Arijit Singh',          movie:'Barfi',                   q:'Phir Le Aya Dil Arijit Singh Barfi official'},
+    {title:'Tum Se Hi',            artist:'Mohit Chauhan',         movie:'Jab We Met',              q:'Tum Se Hi Mohit Chauhan Jab We Met official'},
+    {title:'Tujhe Bhula Diya',     artist:'Mohit Chauhan',         movie:'Anjaana Anjaani',         q:'Tujhe Bhula Diya Mohit Chauhan Anjaana Anjaani'},
+    {title:'Safar',                artist:'Jubin Nautiyal',        movie:'Jab Harry Met Sejal',     q:'Safar Jubin Nautiyal Jab Harry Met Sejal official'},
+    {title:'Main Yahaan Hoon',     artist:'Udit Narayan',          movie:'Veer-Zaara',              q:'Main Yahaan Hoon Udit Narayan Veer-Zaara'},
+    {title:'Agar Tum Saath Ho',    artist:'Arijit · Alka Yagnik',  movie:'Tamasha',                 q:'Agar Tum Saath Ho full video Tamasha official'},
+    {title:'Ae Watan',             artist:'Arijit Singh',          movie:'Raazi',                   q:'Ae Watan Arijit Singh Raazi official'},
+    {title:'Phir Mohabbat',        artist:'Arijit Singh',          movie:'Murder 2',                q:'Phir Mohabbat Arijit Singh Murder 2 full song'},
+    {title:'Chaudhary',            artist:'Mame Khan',             movie:'',                        q:'Chaudhary Mame Khan full song official'},
+    {title:'Ik Vaari Aa',          artist:'Arijit Singh',          movie:'Raabta',                  q:'Ik Vaari Aa full video Raabta official'},
+    {title:'Soch Na Sake',         artist:'Arijit Singh',          movie:'Airlift',                 q:'Soch Na Sake Arijit Singh Airlift official'},
   ],
   latest: [
-    {id:'BddP6PYo2gs', title:'Kesariya',                artist:'Arijit Singh',         movie:'Brahmastra'},
-    {id:'XFocrC8mf-I', title:'Pehle Bhi Main',          artist:'Vishal Mishra',        movie:'Animal'},
-    {id:'Bnl9nJFj6bA', title:'Raataan Lambiyan',        artist:'Jubin Nautiyal',       movie:'Shershaah'},
-    {id:'F-JM-zCF98A', title:'Ranjha',                  artist:'B Praak',              movie:'Shershaah'},
-    {id:'D5mXJEKJWjk', title:'Tere Vaaste',             artist:'Varun Jain',           movie:'Zara Hatke'},
-    {id:'pK7hYJZjBpM', title:'Pasoori',                 artist:'Ali Sethi · Shae Gill',movie:''},
-    {id:'M3dNsKJ-b0Y', title:'Jhoome Jo Pathaan',       artist:'Arijit Singh',         movie:'Pathaan'},
-    {id:'8yBWi8aHkBY', title:'Tu Jhoothi Main Makkaar', artist:'AR Rahman',            movie:'TJMM'},
-    {id:'bD1Q5-HN3Ks', title:'Arjan Vailly',            artist:'Bhupinder Babbal',     movie:'Animal'},
-    {id:'CahSBqfJGrE', title:'O Maahi',                 artist:'Arijit Singh',         movie:'Dunki'},
-    {id:'o8TLQBXOBMA', title:'Naina',                   artist:'Arijit Singh',         movie:'Crew'},
-    {id:'oT2bBhMoiIg', title:'Ram Siya Ram',            artist:'Sachet-Parampara',     movie:'Adipurush'},
+    {title:'Kesariya',             artist:'Arijit Singh',          movie:'Brahmastra',              q:'Kesariya full video Brahmastra official'},
+    {title:'Pehle Bhi Main',       artist:'Vishal Mishra',         movie:'Animal',                  q:'Pehle Bhi Main full video Animal official'},
+    {title:'Raataan Lambiyan',     artist:'Jubin Nautiyal',        movie:'Shershaah',               q:'Raataan Lambiyan full video Shershaah official'},
+    {title:'Ranjha',               artist:'B Praak',               movie:'Shershaah',               q:'Ranjha full video Shershaah B Praak official'},
+    {title:'Tere Vaaste',          artist:'Varun Jain',            movie:'Zara Hatke',              q:'Tere Vaaste full video Zara Hatke official'},
+    {title:'Pasoori',              artist:'Ali Sethi · Shae Gill', movie:'Coke Studio',             q:'Pasoori Ali Sethi Shae Gill Coke Studio official'},
+    {title:'Jhoome Jo Pathaan',    artist:'Arijit Singh',          movie:'Pathaan',                 q:'Jhoome Jo Pathaan full video Pathaan official'},
+    {title:'Arjan Vailly',         artist:'Bhupinder Babbal',      movie:'Animal',                  q:'Arjan Vailly full video Animal official'},
+    {title:'O Maahi',              artist:'Arijit Singh',          movie:'Dunki',                   q:'O Maahi full video Dunki official Arijit Singh'},
+    {title:'Naina',                artist:'Arijit Singh',          movie:'Crew',                    q:'Naina full video Crew official Arijit Singh'},
+    {title:'Sajni',                artist:'Arijit Singh',          movie:'Laapataa Ladies',         q:'Sajni full video Laapataa Ladies official'},
+    {title:'Tu Jhoothi Main Makkaar',artist:'AR Rahman',           movie:'TJMM',                    q:'Tu Jhoothi Main Makkaar title song official'},
   ],
 };
 
-// YouTube thumbnail helper — no API needed!
-function thumb(id, q='mqdefault') {
-  return `https://img.youtube.com/vi/${id}/${q}.jpg`;
-}
-
-// ─────────────────────────────────────────
+// ─────────────────────────────────────────────────────────────
 // STATE
-// ─────────────────────────────────────────
+// ─────────────────────────────────────────────────────────────
 let genre = GENRES[0];
-let songs = [];       // current visible songs
-let allSongs = [];    // flattened all songs for search
+let songs = [];        // resolved songs for current view
 let idx = -1;
 let expanded = false;
 let favs = JSON.parse(localStorage.getItem('sm_f')||'[]');
+let cache = {};        // q -> {id, thumb, ytTitle}
+let searchMode = false;
 
-// Build flat list for search
-Object.entries(SONGS).forEach(([gid, list]) => {
-  list.forEach(s => allSongs.push({...s, genreId: gid}));
-});
+// Flat list for search
+const allCatalog = Object.entries(CATALOG).flatMap(([gid,list]) =>
+  list.map(s => ({...s, genreId: gid})));
 
-// ─────────────────────────────────────────
+// ─────────────────────────────────────────────────────────────
+// SEARCH via /api/search (serverless) or YouTube API directly
+// ─────────────────────────────────────────────────────────────
+async function ytSearch(q) {
+  if (cache[q]) return cache[q];
+  try {
+    // On Vercel: use serverless route (no CORS)
+    // On localhost/preview: try direct API
+    let data;
+    try {
+      const r = await fetch(`/api/search?q=${encodeURIComponent(q)}`, {signal: AbortSignal.timeout(8000)});
+      if (r.ok) data = await r.json();
+    } catch(e) {}
+
+    // Fallback: direct API (works on hosted domains)
+    if (!data?.id) {
+      const key = 'AIzaSyCFHRCWImY1thLi20nBSZpgMGW3UBfRfYg';
+      const apiUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&maxResults=1&videoCategoryId=10&q=${encodeURIComponent(q)}&key=${key}`;
+      const r2 = await fetch(apiUrl, {signal: AbortSignal.timeout(8000)});
+      if (r2.ok) {
+        const raw = await r2.json();
+        if (raw.items?.length) {
+          const item = raw.items[0];
+          data = {
+            id: item.id.videoId,
+            thumb: item.snippet.thumbnails?.medium?.url,
+            ytTitle: item.snippet.title,
+          };
+        }
+      }
+    }
+
+    if (data?.id) {
+      cache[q] = data;
+      return data;
+    }
+  } catch(e) {}
+  return null;
+}
+
+// ─────────────────────────────────────────────────────────────
 // TABS
-// ─────────────────────────────────────────
+// ─────────────────────────────────────────────────────────────
 function renderTabs() {
   document.getElementById('tabs').innerHTML = GENRES.map(g => `
     <div class="tab ${g.id===genre.id?'on':''}" data-id="${g.id}"
@@ -330,119 +372,223 @@ function renderTabs() {
   document.querySelectorAll('.tab').forEach(t =>
     t.addEventListener('click', () => {
       genre = GENRES.find(g => g.id===t.dataset.id);
+      searchMode = false;
+      document.getElementById('searchInput').value = '';
+      document.getElementById('clearBtn').style.display = 'none';
       renderTabs();
-      showGenre();
+      loadSongs(CATALOG[genre.id]);
     }));
 }
 
-// ─────────────────────────────────────────
-// SHOW GENRE
-// ─────────────────────────────────────────
-function showGenre(searchQ='') {
-  songs = searchQ
-    ? allSongs.filter(s =>
-        s.title.toLowerCase().includes(searchQ.toLowerCase()) ||
-        s.artist.toLowerCase().includes(searchQ.toLowerCase()) ||
-        s.movie.toLowerCase().includes(searchQ.toLowerCase()))
-    : (SONGS[genre.id] || []);
-
-  if (!songs.length) {
+// ─────────────────────────────────────────────────────────────
+// LOAD SONGS — render skeletons then resolve IDs one by one
+// ─────────────────────────────────────────────────────────────
+async function loadSongs(catalog) {
+  if (!catalog?.length) {
     document.getElementById('content').innerHTML =
-      `<div class="empty"><div class="ei">🔍</div><p>No songs found.<br>Try a different search.</p></div>`;
+      `<div class="empty"><div class="ei">🔍</div><p>No songs found.</p></div>`;
     return;
   }
 
+  // Reset
+  songs = catalog.map(s => ({...s, id: null, thumb: null, ytTitle: null, loading: true}));
+  idx = -1;
+  renderSongs();
+
+  setStatus('loading', `⏳ Loading ${catalog.length} songs…`);
+
+  let loaded = 0, failed = 0;
+
+  // Resolve all in parallel — batches of 4 to avoid rate limit
+  for (let i = 0; i < songs.length; i += 4) {
+    const batch = songs.slice(i, i+4).map((s,j) => {
+      const ii = i+j;
+      return ytSearch(s.q).then(result => {
+        if (result?.id) {
+          songs[ii] = {...s, ...result, loading: false};
+          loaded++;
+        } else {
+          songs[ii] = {...s, loading: false, failed: true};
+          failed++;
+        }
+        updateCard(ii);
+        setStatus('loading', `⏳ Loading… ${loaded+failed}/${songs.length}`);
+      });
+    });
+    await Promise.all(batch);
+  }
+
+  if (failed === songs.length) {
+    setStatus('err', '❌ Could not load songs. Check API key or internet.');
+  } else if (failed > 0) {
+    setStatus('ok', `✅ ${loaded} songs ready · ${failed} unavailable in your region`);
+  } else {
+    setStatus('ok', `✅ ${loaded} songs ready`);
+    setTimeout(() => document.getElementById('statusBar').style.display='none', 3000);
+  }
+}
+
+function setStatus(type, msg) {
+  const bar = document.getElementById('statusBar');
+  bar.style.display = 'flex';
+  bar.className = `status ${type}`;
+  document.getElementById('statusMsg').textContent = msg;
+}
+
+// ─────────────────────────────────────────────────────────────
+// RENDER — skeletons first, update progressively
+// ─────────────────────────────────────────────────────────────
+function renderSongs() {
   const g = genre;
   const feat = songs.slice(0, 4);
   const list = songs.slice(4);
 
   document.getElementById('content').innerHTML = `
     <div class="slabel">${g.emoji} ${g.label} — Featured</div>
-    <div class="strip">
+    <div class="strip" id="featStrip">
       ${feat.map((s,i) => `
-        <div class="scard ${idx<songs.length&&songs[idx]?.id===s.id?'on':''}" data-i="${i}" style="animation-delay:${i*.06}s;">
-          <img class="scard-img" src="${thumb(s.id)}" alt="${s.title}"
-            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
-          <div class="scard-ph" style="display:none;">${g.emoji}</div>
+        <div class="scard loading" data-i="${i}" style="animation-delay:${i*.06}s">
+          <div class="card-ph shimmer" id="cph${i}">${g.emoji}</div>
           <div class="scard-body">
             <div class="scard-title">${s.title}</div>
-            <div class="scard-artist">${s.artist}</div>
+            <div class="scard-ytitle" id="cytitle${i}"></div>
           </div>
         </div>`).join('')}
     </div>
 
     <div class="slabel">🎵 All Songs (${songs.length})</div>
-    <div class="slist">
+    <div class="slist" id="songList">
       ${list.map((s,i) => {
         const ii = i+4;
         return `
-        <div class="srow ${idx<songs.length&&songs[idx]?.id===s.id?'on':''}" data-i="${ii}" style="animation-delay:${i*.025}s;">
+        <div class="srow loading" data-i="${ii}" style="animation-delay:${i*.025}s">
           <div class="snum">${ii+1}</div>
           <div class="sbars"><span></span><span></span><span></span><span></span></div>
-          <img class="srow-img" src="${thumb(s.id)}" alt="${s.title}"
-            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
-          <div class="srow-ph" style="display:none;">${g.emoji}</div>
+          <div class="row-ph" id="rph${ii}">${g.emoji}</div>
           <div class="srow-meta">
             <div class="srow-title">${s.title}</div>
             <div class="srow-detail">${s.artist}${s.movie?' · '+s.movie:''}</div>
+            <div class="srow-ytitle" id="ryt${ii}"></div>
           </div>
         </div>`;
       }).join('')}
     </div>`;
 
-  // click handlers
-  document.querySelectorAll('.scard').forEach(el =>
-    el.addEventListener('click', () => play(+el.dataset.i)));
-  document.querySelectorAll('.srow').forEach(el =>
-    el.addEventListener('click', () => play(+el.dataset.i)));
+  attachClicks();
 }
 
-// ─────────────────────────────────────────
+function updateCard(i) {
+  const s = songs[i];
+  const el = document.querySelector(`[data-i="${i}"]`);
+  if (!el) return;
+
+  el.classList.remove('loading');
+
+  if (s.failed) {
+    el.style.opacity = '0.35';
+    el.style.pointerEvents = 'none';
+    el.title = 'Not available';
+    return;
+  }
+
+  if (!s.id) return;
+
+  const featured = i < 4;
+
+  if (featured) {
+    // Replace shimmer placeholder with real thumbnail
+    const ph = document.getElementById(`cph${i}`);
+    if (ph) {
+      const img = document.createElement('img');
+      img.className = 'card-thumb';
+      img.src = s.thumb || `https://img.youtube.com/vi/${s.id}/mqdefault.jpg`;
+      img.alt = s.title;
+      img.onerror = () => { img.src = `https://img.youtube.com/vi/${s.id}/mqdefault.jpg`; };
+      ph.replaceWith(img);
+    }
+    // Show actual YouTube title if different
+    const yt = document.getElementById(`cytitle${i}`);
+    if (yt && s.ytTitle) yt.textContent = s.ytTitle;
+  } else {
+    // Row thumbnail
+    const ph = document.getElementById(`rph${i}`);
+    if (ph) {
+      const img = document.createElement('img');
+      img.className = 'row-thumb';
+      img.src = s.thumb || `https://img.youtube.com/vi/${s.id}/mqdefault.jpg`;
+      img.alt = s.title;
+      img.onerror = () => { img.src = `https://img.youtube.com/vi/${s.id}/mqdefault.jpg`; };
+      ph.replaceWith(img);
+    }
+    const yt = document.getElementById(`ryt${i}`);
+    if (yt && s.ytTitle) yt.textContent = s.ytTitle;
+  }
+
+  attachClicks();
+}
+
+function attachClicks() {
+  document.querySelectorAll('.scard:not(.loading):not([data-bound])').forEach(el => {
+    el.dataset.bound = '1';
+    el.addEventListener('click', () => {
+      const s = songs[+el.dataset.i];
+      if (s?.id) play(+el.dataset.i);
+    });
+  });
+  document.querySelectorAll('.srow:not(.loading):not([data-bound])').forEach(el => {
+    el.dataset.bound = '1';
+    el.addEventListener('click', () => {
+      const s = songs[+el.dataset.i];
+      if (s?.id) play(+el.dataset.i);
+    });
+  });
+}
+
+// ─────────────────────────────────────────────────────────────
 // PLAY
-// ─────────────────────────────────────────
+// ─────────────────────────────────────────────────────────────
 function play(i) {
   const s = songs[i];
-  if (!s) return;
+  if (!s?.id) return;
   idx = i;
 
-  // mini player
   document.getElementById('pthumb').innerHTML =
-    `<img src="${thumb(s.id,'hqdefault')}" onerror="this.parentNode.textContent='${genre.emoji}'" style="width:100%;height:100%;object-fit:cover;display:block;"/>`;
+    `<img src="${s.thumb||`https://img.youtube.com/vi/${s.id}/hqdefault.jpg`}"
+      onerror="this.parentNode.textContent='${genre.emoji}'"
+      style="width:100%;height:100%;object-fit:cover;display:block;"/>`;
+
   document.getElementById('ptitle').textContent = s.title;
   document.getElementById('psub').textContent = s.artist + (s.movie?' · '+s.movie:'');
-
-  // expanded
   document.getElementById('petitle').textContent = s.title;
-  document.getElementById('pesub').textContent = s.artist + (s.movie?' · '+s.movie:'') + ' · ' + genre.label;
+  document.getElementById('pesub').textContent = (s.ytTitle||s.artist) + (s.movie?' · '+s.movie:'');
 
-  // embed video
   document.getElementById('ytbox').innerHTML =
-    `<iframe id="ytf" src="https://www.youtube.com/embed/${s.id}?autoplay=1&rel=0&modestbranding=1"
-      allow="autoplay;encrypted-media" allowfullscreen style="width:100%;height:100%;border:none;display:block;"></iframe>`;
+    `<iframe src="https://www.youtube.com/embed/${s.id}?autoplay=1&rel=0&modestbranding=1"
+      allow="autoplay;encrypted-media" allowfullscreen
+      style="width:100%;height:100%;border:none;display:block;"></iframe>`;
 
   document.getElementById('ppB').textContent = '⏸';
   document.getElementById('player').classList.add('open');
   document.getElementById('favB').textContent = favs.includes(s.id) ? '❤️ Saved' : '🤍 Favourite';
 
-  // highlight
   document.querySelectorAll('.scard,.srow').forEach(el =>
     el.classList.toggle('on', +el.dataset.i === i));
 }
 
-// ─────────────────────────────────────────
-// PLAYER CONTROLS
-// ─────────────────────────────────────────
+// ─────────────────────────────────────────────────────────────
+// CONTROLS
+// ─────────────────────────────────────────────────────────────
 document.getElementById('prevB').addEventListener('click', e => {
   e.stopPropagation();
-  if (idx > 0) play(idx-1);
+  for (let i=idx-1; i>=0; i--) { if(songs[i]?.id){play(i);break;} }
 });
 document.getElementById('nextB').addEventListener('click', e => {
   e.stopPropagation();
-  if (idx < songs.length-1) play(idx+1);
+  for (let i=idx+1; i<songs.length; i++) { if(songs[i]?.id){play(i);break;} }
 });
 document.getElementById('ppB').addEventListener('click', e => {
   e.stopPropagation();
-  const f = document.getElementById('ytf');
+  const f = document.querySelector('#ytbox iframe');
   if (!f) return;
   if (f.src.includes('autoplay=1')) {
     f.src = f.src.replace('autoplay=1','autoplay=0');
@@ -464,50 +610,56 @@ document.getElementById('pmini').addEventListener('click', toggleExp);
 
 document.getElementById('ytB').addEventListener('click', () => {
   const s = songs[idx];
-  if (s) window.open(`https://youtu.be/${s.id}`, '_blank');
+  if (s?.id) window.open(`https://youtu.be/${s.id}`, '_blank');
 });
 document.getElementById('shareB').addEventListener('click', () => {
   const s = songs[idx];
-  if (!s) return;
+  if (!s?.id) return;
   const url = `https://youtu.be/${s.id}`;
   if (navigator.share) navigator.share({title:s.title, text:s.artist, url});
-  else { navigator.clipboard?.writeText(url); alert('Link copied!'); }
+  else { navigator.clipboard?.writeText(url).then(()=>alert('Link copied!')); }
 });
 document.getElementById('favB').addEventListener('click', () => {
   const s = songs[idx];
-  if (!s) return;
+  if (!s?.id) return;
   const i = favs.indexOf(s.id);
   if (i>=0) { favs.splice(i,1); document.getElementById('favB').textContent='🤍 Favourite'; }
   else { favs.push(s.id); document.getElementById('favB').textContent='❤️ Saved'; }
   localStorage.setItem('sm_f', JSON.stringify(favs));
 });
 
-// ─────────────────────────────────────────
+// ─────────────────────────────────────────────────────────────
 // SEARCH
-// ─────────────────────────────────────────
+// ─────────────────────────────────────────────────────────────
 let st;
 document.getElementById('searchInput').addEventListener('input', e => {
   const q = e.target.value.trim();
   document.getElementById('clearBtn').style.display = q ? 'block' : 'none';
   clearTimeout(st);
-  st = setTimeout(() => showGenre(q), 300);
+  if (!q) { searchMode=false; renderTabs(); loadSongs(CATALOG[genre.id]); return; }
+  st = setTimeout(() => {
+    searchMode = true;
+    const results = allCatalog.filter(s =>
+      s.title.toLowerCase().includes(q.toLowerCase()) ||
+      s.artist.toLowerCase().includes(q.toLowerCase()) ||
+      s.movie.toLowerCase().includes(q.toLowerCase()));
+    loadSongs(results);
+  }, 350);
 });
 document.getElementById('clearBtn').addEventListener('click', () => {
   document.getElementById('searchInput').value = '';
   document.getElementById('clearBtn').style.display = 'none';
-  showGenre();
+  searchMode = false;
+  loadSongs(CATALOG[genre.id]);
 });
 
-// ─────────────────────────────────────────
-// PWA
-// ─────────────────────────────────────────
+// ─────────────────────────────────────────────────────────────
+// PWA + INIT
+// ─────────────────────────────────────────────────────────────
 if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(()=>{});
 
-// ─────────────────────────────────────────
-// INIT
-// ─────────────────────────────────────────
 renderTabs();
-showGenre();
+loadSongs(CATALOG[genre.id]);
 </script>
 </body>
 </html>
